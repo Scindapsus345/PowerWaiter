@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerWaiters.Views.ProfilePage">
+    <ContentPage.Content>
+        <StackLayout Padding="20, 20">
+            <Grid Padding="0, 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="0" Padding="10">
+                    <Label Text="Name" FontSize="30" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black"/>
+                    <Label Text="Description" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
+                </StackLayout>
+                <Grid Grid.Column="1">
+                    <Frame WidthRequest="100" HeightRequest="100" CornerRadius="50" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Black"
+                           Padding="0" Margin="0">
+                    </Frame>
+                </Grid>
+            </Grid>
+
+            <Label Text="0" FontSize="50" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
+
+            <StackLayout>
+                <Label Text="Статистика" FontSize="30" TextColor="Black"/>
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black"/>
+                    <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black"/>
+                    <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black"/>
+                </StackLayout>
+                <CollectionView ItemsLayout="VerticalGrid, 2">
+                    
+                </CollectionView>
+            </StackLayout>
+
+            <CollectionView>
+
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
