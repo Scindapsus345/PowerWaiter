@@ -1,5 +1,7 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PowerWaiters.ViewModels;
 
 namespace PowerWaiters.Views
 {
@@ -9,6 +11,7 @@ namespace PowerWaiters.Views
         public ProfilePage()
         {
             InitializeComponent();
+            BindingContext = new ProfileViewModel();
         }
     }
 }

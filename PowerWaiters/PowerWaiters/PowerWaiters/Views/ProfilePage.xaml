@@ -1,45 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels"
              x:Class="PowerWaiters.Views.ProfilePage">
+    <ContentPage.BindingContext>
+        <viewmodels:ProfileViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Padding="20, 20">
-            <Grid Padding="0, 10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackLayout Grid.Column="0" Padding="10">
-                    <Label Text="Name" FontSize="30" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black"/>
-                    <Label Text="Description" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
-                </StackLayout>
-                <Grid Grid.Column="1">
-                    <Frame WidthRequest="100" HeightRequest="100" CornerRadius="50" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Black"
+        <ScrollView>
+            <StackLayout Padding="20, 20" >
+                <Grid Padding="0, 10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="0" Padding="10">
+                        <Label Text="Name" FontSize="30" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black"/>
+                        <Label Text="Description" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
+                    </StackLayout>
+                    <Grid Grid.Column="1">
+                        <Frame WidthRequest="100" HeightRequest="100" CornerRadius="50" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Black"
                            Padding="0" Margin="0">
-                    </Frame>
+                        </Frame>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Label Text="0" FontSize="50" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
+                <Label Text="0" FontSize="50" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
 
-            <StackLayout>
-                <Label Text="Статистика" FontSize="30" TextColor="Black"/>
-                <StackLayout Orientation="Horizontal">
-                    <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black"/>
-                    <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black"/>
-                    <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black"/>
+                <StackLayout>
+                    <Label Text="Статистика" FontSize="30" TextColor="Black"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black"/>
+                        <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black"/>
+                        <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black"/>
+                    </StackLayout>
+                    <CollectionView ItemsSource="{Binding StatisticsDisplayModels}" 
+                                    ItemsLayout="VerticalGrid, 2" 
+                                    HeightRequest="{Binding StatisticsHeight}"
+                                    Margin="0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=StatsBlockHeight}" > <!--TODO-->
+                                    <StackLayout BackgroundColor="#F1F1F1" Padding="10, 10" Margin="5, 5">
+                                        <Label Text="{Binding Name}" 
+                                               FontSize="14" 
+                                               TextColor="Black" 
+                                               HorizontalOptions="Center"/>
+                                        <Label Text="{Binding Count}" 
+                                               FontSize="24" 
+                                               TextColor="Black" 
+                                               VerticalOptions="End" 
+                                               HorizontalOptions="Center"/>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
-                <CollectionView ItemsLayout="VerticalGrid, 2">
-                    
+
+                <Label Text="Достижения" FontSize="30" TextColor="Black"/>
+                <CollectionView ItemsSource="{Binding AchievementModels}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="0, 10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0" Padding="10">
+                                    <Label Text="Name" FontSize="30" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black"/>
+                                    <Label Text="Description" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
+                                </StackLayout>
+                                <Grid Grid.Column="1">
+                                    <Frame WidthRequest="60" HeightRequest="60" CornerRadius="50" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Black"
+                           Padding="0" Margin="0">
+                                    </Frame>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
-
-            <CollectionView>
-
-            </CollectionView>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

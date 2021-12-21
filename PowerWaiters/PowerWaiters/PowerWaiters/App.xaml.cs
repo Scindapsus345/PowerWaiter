@@ -1,6 +1,5 @@
-﻿using System;
+﻿using PowerWaiters.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace PowerWaiters
 {
@@ -10,7 +9,7 @@ namespace PowerWaiters
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new ProfilePage();
         }
 
         protected override void OnStart()
