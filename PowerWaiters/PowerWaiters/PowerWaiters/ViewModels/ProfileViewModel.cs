@@ -24,7 +24,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int statisticsHeight = 300;
+        private int statisticsHeight;
         public int StatisticsHeight
         {
             get => statisticsHeight;
