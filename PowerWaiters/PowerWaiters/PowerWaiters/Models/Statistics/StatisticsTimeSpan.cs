@@ -1,6 +1,6 @@
 ﻿namespace PowerWaiters.Models
 {
-    enum StatisticsTimeSpan
+    public enum StatisticsTimeSpan
     {
         Day,
         Week,

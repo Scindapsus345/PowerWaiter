@@ -10,7 +10,6 @@ namespace PowerWaiters.ViewModels
 {
     class ProfileViewModel : BindableObject
     {
-        //public StatisticsModel StatisticsModel = StatisticsService.GetStatistics(StatisticsTimeSpan.Day)
         private IEnumerable<StatisticsDisplayModel> statisticsDisplayModels;
         public IEnumerable<StatisticsDisplayModel> StatisticsDisplayModels
         {
@@ -38,6 +37,8 @@ namespace PowerWaiters.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public ICommand UpdateStatistics { get; }
 
         private UserInfo user;
         public UserInfo User
@@ -104,13 +105,27 @@ namespace PowerWaiters.ViewModels
             }
         }
 
+        private StatisticsTimeSpan currentTimeSpan;
+        public int DayBtnBorderSize => currentTimeSpan == StatisticsTimeSpan.Day ? 2 : 0;
+        public int WeekBtnBorderSize => currentTimeSpan == StatisticsTimeSpan.Week ? 2 : 0;
+        public int MonthBtnBorderSize => currentTimeSpan == StatisticsTimeSpan.Month ? 2 : 0;
+
         public ProfileViewModel()
         {
             StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsService.GetStatistics(StatisticsTimeSpan.Day));
             AchievementModels = AchievementsService.GetAchievements();
             User = UserInfoService.GetUserInfo();
+            UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
         }
 
+        private void OnUpdateStatistics(StatisticsTimeSpan timeSpan)
+        {
+            StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsService.GetStatistics(timeSpan));
+            currentTimeSpan = timeSpan;
+            OnPropertyChanged(nameof(DayBtnBorderSize));
+            OnPropertyChanged(nameof(WeekBtnBorderSize));
+            OnPropertyChanged(nameof(MonthBtnBorderSize));
+        }
 
         private static List<StatisticsDisplayModel> GetStatisticDisplayModels(StatisticsModel statisticsModel)
         {

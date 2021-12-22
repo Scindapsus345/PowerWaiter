@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels"
+             xmlns:models="clr-namespace:PowerWaiters.Models"
              x:Class="PowerWaiters.Views.ProfilePage">
     <ContentPage.BindingContext>
         <viewmodels:ProfileViewModel/>
@@ -9,10 +10,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="20, 20" >
-                <Frame Background="#F1F1F1" CornerRadius="15" Padding="0">
+                <Frame Background="#F1F1F1" CornerRadius="15" Padding="0" HasShadow="False">
                     <Grid Padding="0, 10">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
@@ -23,8 +24,13 @@
                             <Label Text="{Binding User.Description}" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
                         </StackLayout>
                         <Grid Grid.Column="1">
-                            <Frame WidthRequest="100" HeightRequest="100" CornerRadius="50" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Black"
-                           Padding="0" Margin="0">
+                            <Frame WidthRequest="100" 
+                                   HeightRequest="100" 
+                                   CornerRadius="50" 
+                                   VerticalOptions="Center" 
+                                   HorizontalOptions="Center" 
+                                   Padding="0" Margin="0"
+                                   HasShadow="False">
                                 <Image Source="{Binding User.AvatarUrl}"/>
                             </Frame>
                         </Grid>
@@ -35,10 +41,13 @@
 
                 <StackLayout>
                     <Label Text="Статистика" FontSize="30" TextColor="Black"/>
-                    <StackLayout Orientation="Horizontal">
-                        <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black"/>
-                        <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black"/>
-                        <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black"/>
+                    <StackLayout Orientation="Horizontal" HeightRequest="40">
+                        <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black" BorderColor="Black" BorderWidth="{Binding DayBtnBorderSize}" Padding="0"
+                                Command="{Binding UpdateStatistics}" CommandParameter="{x:Static models:StatisticsTimeSpan.Day}"/>
+                        <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black" BorderColor="Black" BorderWidth="{Binding WeekBtnBorderSize}" Padding="0"
+                                Command="{Binding UpdateStatistics}" CommandParameter="{x:Static models:StatisticsTimeSpan.Week}"/>
+                        <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black" BorderColor="Black" BorderWidth="{Binding MonthBtnBorderSize}" Padding="0"
+                                Command="{Binding UpdateStatistics}" CommandParameter="{x:Static models:StatisticsTimeSpan.Month}"/>
                     </StackLayout>
                     <CollectionView ItemsSource="{Binding StatisticsDisplayModels}" 
                                     ItemsLayout="VerticalGrid, 2" 
@@ -46,7 +55,7 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=StatsBlockHeight}" > <!--TODO-->
-                                    <Frame Padding="0" Margin="5, 5" CornerRadius="15" BackgroundColor="#F1F1F1">
+                                    <Frame Padding="0" Margin="5, 5" CornerRadius="15" BackgroundColor="#F1F1F1" HasShadow="False">
                                         <StackLayout Padding="10, 10">
                                             <Label Text="{Binding Name}" 
                                                FontSize="14" 
@@ -70,7 +79,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=AchievementBlockHeight}">
-                                <Frame Padding="0" Margin="0, 10" CornerRadius="15">
+                                <Frame Padding="0" Margin="0, 10" CornerRadius="15" HasShadow="False">
                                     <Grid Padding="10" BackgroundColor="#F1F1F1">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="100"/>
@@ -84,12 +93,13 @@
                                             <Label Text="{Binding Description}" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
                                         </StackLayout>
                                         <Frame Grid.Column="1" 
-                                       WidthRequest="80" 
-                                       HeightRequest="80" 
-                                       CornerRadius="50" 
-                                       VerticalOptions="Center" 
-                                       HorizontalOptions="Center"
-                                       Padding="0" Margin="0">
+                                               WidthRequest="80" 
+                                               HeightRequest="80" 
+                                               CornerRadius="50" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Center"
+                                               Padding="0" Margin="0"
+                                               HasShadow="False">
                                             <Image Source="{Binding IconUrl}"/>
                                         </Frame>
                                     </Grid>
