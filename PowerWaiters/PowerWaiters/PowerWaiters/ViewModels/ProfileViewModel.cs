@@ -3,14 +3,14 @@ using PowerWaiters.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace PowerWaiters.ViewModels
 {
     class ProfileViewModel : BindableObject
     {
-        public StatisticsModel StatisticsModel = StatisticsService.GetStatistics(StatisticsTimeSpan.Day);
-
+        //public StatisticsModel StatisticsModel = StatisticsService.GetStatistics(StatisticsTimeSpan.Day)
         private IEnumerable<StatisticsDisplayModel> statisticsDisplayModels;
         public IEnumerable<StatisticsDisplayModel> StatisticsDisplayModels
         {
@@ -35,6 +35,19 @@ namespace PowerWaiters.ViewModels
                     return;
                 achievementModels = value;
                 UpdateAchievementsHeight();
+                OnPropertyChanged();
+            }
+        }
+
+        private UserInfo user;
+        public UserInfo User
+        {
+            get => user;
+            set
+            {
+                if (value == user)
+                    return;
+                user = value;
                 OnPropertyChanged();
             }
         }
@@ -93,9 +106,11 @@ namespace PowerWaiters.ViewModels
 
         public ProfileViewModel()
         {
-            StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsModel);
+            StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsService.GetStatistics(StatisticsTimeSpan.Day));
             AchievementModels = AchievementsService.GetAchievements();
+            User = UserInfoService.GetUserInfo();
         }
+
 
         private static List<StatisticsDisplayModel> GetStatisticDisplayModels(StatisticsModel statisticsModel)
         {
