@@ -42,8 +42,7 @@
                     </StackLayout>
                     <CollectionView ItemsSource="{Binding StatisticsDisplayModels}" 
                                     ItemsLayout="VerticalGrid, 2" 
-                                    HeightRequest="{Binding StatisticsHeight}"
-                                    Margin="0">
+                                    HeightRequest="{Binding StatisticsHeight}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=StatsBlockHeight}" > <!--TODO-->
@@ -67,10 +66,10 @@
                 </StackLayout>
 
                 <Label Text="Достижения" FontSize="30" TextColor="Black"/>
-                <CollectionView ItemsSource="{Binding AchievementModels}">
+                <CollectionView ItemsSource="{Binding AchievementModels}" HeightRequest="{Binding AchievementsHeight}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=AchievementBlockHeight}">
                                 <Frame Padding="0" Margin="0, 10" CornerRadius="15">
                                     <Grid Padding="10" BackgroundColor="#F1F1F1">
                                         <Grid.RowDefinitions>

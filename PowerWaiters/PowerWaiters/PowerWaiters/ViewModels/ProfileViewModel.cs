@@ -2,6 +2,7 @@
 using PowerWaiters.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace PowerWaiters.ViewModels
@@ -10,8 +11,8 @@ namespace PowerWaiters.ViewModels
     {
         public StatisticsModel StatisticsModel = StatisticsService.GetStatistics(StatisticsTimeSpan.Day);
 
-        private List<StatisticsDisplayModel> statisticsDisplayModels = new List<StatisticsDisplayModel>();
-        public List<StatisticsDisplayModel> StatisticsDisplayModels
+        private IEnumerable<StatisticsDisplayModel> statisticsDisplayModels;
+        public IEnumerable<StatisticsDisplayModel> StatisticsDisplayModels
         {
             get => statisticsDisplayModels;
             set
@@ -20,6 +21,20 @@ namespace PowerWaiters.ViewModels
                     return;
                 statisticsDisplayModels = value;
                 UpdateStatisticsHeight();
+                OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<AchievementModel> achievementModels;
+        public IEnumerable<AchievementModel> AchievementModels
+        {
+            get => achievementModels;
+            set
+            {
+                if (value == achievementModels)
+                    return;
+                achievementModels = value;
+                UpdateAchievementsHeight();
                 OnPropertyChanged();
             }
         }
@@ -50,16 +65,28 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private IEnumerable<AchievementModel> achievementModels;
-        public IEnumerable<AchievementModel> AchievementModels
+        private int achievementsHeight;
+        public int AchievementsHeight
         {
-            get => achievementModels;
+            get => achievementsHeight;
             set
             {
-                if (value == achievementModels)
+                if (value == achievementsHeight)
                     return;
-                achievementModels = value;
-                UpdateStatisticsHeight();
+                achievementsHeight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int achievementBlockHeight = 150;
+        public int AchievementBlockHeight
+        {
+            get => achievementBlockHeight;
+            set
+            {
+                if (value == achievementBlockHeight)
+                    return;
+                achievementBlockHeight = value;
                 OnPropertyChanged();
             }
         }
@@ -88,9 +115,10 @@ namespace PowerWaiters.ViewModels
 
         private void UpdateStatisticsHeight()
         {
-            var count = statisticsDisplayModels.Count;
-            StatisticsHeight = ((count / 2) + (count % 2)) * statsBlockHeight;
+            var count = StatisticsDisplayModels.Count();
+            StatisticsHeight = ((count / 2) + (count % 2)) * StatsBlockHeight;
         }
 
+        private void UpdateAchievementsHeight() => AchievementsHeight = AchievementModels.Count() * AchievementBlockHeight;
     }
 }
