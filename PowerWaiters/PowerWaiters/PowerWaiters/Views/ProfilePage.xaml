@@ -78,7 +78,7 @@
                 <CollectionView ItemsSource="{Binding AchievementModels}" HeightRequest="{Binding AchievementsHeight}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=AchievementBlockHeight}">
+                            <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=AchievementBlockHeight, Mode=TwoWay}">
                                 <Frame Padding="0" Margin="0, 10" CornerRadius="15" HasShadow="False" BackgroundColor="{Binding BorderColor}">
                                     <Frame Padding="0" Margin="3, 3" CornerRadius="13" HasShadow="False">
                                         <Grid Padding="10" BackgroundColor="{Binding BackgroundColor}">

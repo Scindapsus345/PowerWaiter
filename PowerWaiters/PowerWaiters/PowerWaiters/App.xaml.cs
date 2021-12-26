@@ -9,7 +9,7 @@ namespace PowerWaiters
         {
             InitializeComponent();
 
-            MainPage = new ProfilePage();
+            MainPage = new PurposesPage();
         }
 
         protected override void OnStart()
