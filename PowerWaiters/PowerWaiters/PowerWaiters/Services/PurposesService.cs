@@ -11,20 +11,20 @@ namespace PowerWaiters.Services
             return new List<PurposeModel> {
                 new PurposeModel
                 {
-                    Name = "Name",
-                    Description = "Desc",
-                    Prize = 200,
-                    Progress = 50,
-                    Purpose = 100,
+                    Name = "Выручка",
+                    Description = "Заработать 1.000.000р",
+                    Prize = 3500,
+                    Progress = 891563,
+                    Purpose = 1000000,
                     Deadline = DateTime.Now + TimeSpan.FromDays(5)
                 },
                 new PurposeModel
                 {
-                    Name = "Name2",
-                    Description = "Desc2",
-                    Prize = 200,
-                    Progress = 100,
-                    Purpose = 100,
+                    Name = "Гости",
+                    Description = "Обслужить 2000 гостей",
+                    Prize = 2000,
+                    Progress = 2699,
+                    Purpose = 2000,
                     Deadline = DateTime.Now
                 }
             };

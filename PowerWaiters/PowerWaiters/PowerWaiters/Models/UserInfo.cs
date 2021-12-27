@@ -6,9 +6,11 @@ namespace PowerWaiters.Models
 {
     class UserInfo
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Description { get; set; }
         public string AvatarUrl { get; set; }
         public int Scores { get; set; }
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

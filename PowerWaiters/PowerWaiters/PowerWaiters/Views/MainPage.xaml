@@ -8,16 +8,16 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="20, 20" Spacing="10">
-                <Label Text="{Binding RestourantStats.Name}" FontSize="50" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
+            <StackLayout Padding="20, 20" Spacing="20">
+                <Label Text="{Binding RestourantStats.Name}" FontSize="40" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
                 <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">
-                    <StackLayout>
+                    <StackLayout Spacing="0">
                         <Label Text="Выручка" FontSize="26" TextColor="Black"/>
                         <Label Text="{Binding RestourantStats.Revenue}" FontSize="42" TextColor="Black"/>
                     </StackLayout>
                 </Frame>
                 <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">
-                    <StackLayout>
+                    <StackLayout Spacing="0">
                         <Label Text="Количество обслужанных гостей" FontSize="26" TextColor="Black"/>
                         <Label Text="{Binding RestourantStats.GuestsCount}" FontSize="42" TextColor="Black"/>
                     </StackLayout>
@@ -37,12 +37,12 @@
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="1*"/>
-                                                        <ColumnDefinition Width="4*"/>
+                                                        <ColumnDefinition Width="8*"/>
                                                         <ColumnDefinition Width="2*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Text="{Binding Number}" TextColor="Black" FontSize="20" VerticalOptions="Center"/>
-                                                    <Label Grid.Column="1" Text="{Binding Name}" TextColor="Black" FontSize="20" VerticalOptions="Center"/>
-                                                    <Label Grid.Column="2" Text="{Binding Scores}" TextColor="Black" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                                                    <Label Text="{Binding Number}" TextColor="Black" FontSize="18" VerticalOptions="Center"/>
+                                                    <Label Grid.Column="1" Text="{Binding Name}" TextColor="Black" FontSize="18" VerticalOptions="Center"/>
+                                                    <Label Grid.Column="2" Text="{Binding Scores}" TextColor="Black" FontSize="18" HorizontalOptions="End" VerticalOptions="Center"/>
                                                 </Grid>
                                             </Frame>
                                         </Frame>

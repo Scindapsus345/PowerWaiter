@@ -9,10 +9,11 @@ namespace PowerWaiters.Services
     {
         public static UserInfo GetUserInfo() => new UserInfo
         {
-            Name = "Евгейний",
-            Description = "Почему-то думает, что он лучший официант в мире",
-            Scores = 12,
-            AvatarUrl = "https://sun9-81.userapi.com/impg/c857620/v857620941/1c0e8b/oOAkVZFoco8.jpg?size=450x600&quality=96&sign=42062563927af213d74197b5aa9e4f74&type=album"
+            FirstName = "Игорь",
+            LastName = "Голдберг",
+            Description = "Официант",
+            Scores = 3672,
+            AvatarUrl = "https://www.hotelberlin-sindelfingen.de/wp-content/uploads/sites/4/2015/08/Kellner.jpg"
         };
     }
 }

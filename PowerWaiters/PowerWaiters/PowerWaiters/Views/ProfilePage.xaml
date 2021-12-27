@@ -11,19 +11,21 @@
         <ScrollView>
             <StackLayout Padding="20, 20" >
                 <Frame Background="#F1F1F1" CornerRadius="15" Padding="0" HasShadow="False">
-                    <Grid Padding="0, 10">
+                    <Grid Padding="10, 10">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <StackLayout Grid.Column="0" Padding="10">
-                            <Label Text="{Binding User.Name}" FontSize="30" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black"/>
-                            <Label Text="{Binding User.Description}" FontSize="20" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
+                            <Label Text="{Binding User.FullName}" FontSize="24" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black"/>
+                            <Label Text="{Binding User.Description}" FontSize="18" LineBreakMode="WordWrap" MaxLines="3" TextColor="Black"/>
                         </StackLayout>
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="1" 
+                              VerticalOptions="Center" 
+                              HorizontalOptions="Center" >
                             <Frame WidthRequest="100" 
                                    HeightRequest="100" 
                                    CornerRadius="50" 
@@ -79,9 +81,9 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ProfileViewModel}}, Path=AchievementBlockHeight, Mode=TwoWay}">
-                                <Frame Padding="0" Margin="0, 10" CornerRadius="15" HasShadow="False" BackgroundColor="{Binding BorderColor}">
+                                <Frame Padding="0" Margin="0, 10" CornerRadius="15" HasShadow="False" BackgroundColor="Black">
                                     <Frame Padding="0" Margin="3, 3" CornerRadius="13" HasShadow="False">
-                                        <Grid Padding="10" BackgroundColor="{Binding BackgroundColor}">
+                                        <Grid Padding="10" BackgroundColor="#F1F1F1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="100"/>
                                             </Grid.RowDefinitions>
@@ -93,13 +95,19 @@
                                                 <Label Text="{Binding Name}" 
                                                    FontSize="24" 
                                                    LineBreakMode="WordWrap" 
-                                                   TextColor="{Binding TextColor}"/>
+                                                   TextColor="Black"/>
                                                 <Label Text="{Binding Description}" 
                                                    FontSize="18" 
                                                    LineBreakMode="WordWrap" 
                                                    MaxLines="2" 
-                                                   TextColor="{Binding TextColor}"/>
+                                                   TextColor="Black"/>
                                                 <Label Text="{Binding ProgressString}"
+                                                   FontSize="18" 
+                                                   LineBreakMode="WordWrap" 
+                                                   MaxLines="3" 
+                                                   TextColor="{Binding ProgressTextColor}" 
+                                                   VerticalOptions="End"/>
+                                                <Label Text="{Binding LevelString}"
                                                    FontSize="18" 
                                                    LineBreakMode="WordWrap" 
                                                    MaxLines="3" 

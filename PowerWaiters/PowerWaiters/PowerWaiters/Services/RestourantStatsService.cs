@@ -8,7 +8,7 @@ namespace PowerWaiters.Services
         {
             return new RestourantStatsModel
             {
-                Name = "Alexey",
+                Name = "Italian Pizza",
                 GuestsCount = 555,
                 Revenue = 170
             };

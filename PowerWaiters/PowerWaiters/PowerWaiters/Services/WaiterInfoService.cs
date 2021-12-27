@@ -11,38 +11,52 @@ namespace PowerWaiters.Services
             {
                 new WaiterInfo
                 {
-                    FirstName = "Ivan",
-                    LastName = "Petrov",
+                    FirstName = "Игорь",
+                    LastName = "Замощанский",
                     IsCurrentUser = false,
-                    Scores = 100
+                    Scores = 112
                 },
                 new WaiterInfo
                 {
-                    FirstName = "Tut",
-                    LastName = "Tam",
+                    FirstName = "Арслан",
+                    LastName = "Байкенов",
                     IsCurrentUser = false,
-                    Scores = 80
+                    Scores = 8
                 },
                 new WaiterInfo
                 {
-                    FirstName = "Lox",
-                    LastName = "Nelox",
+                    FirstName = "Александр",
+                    LastName = "Рыбалко",
                     IsCurrentUser = false,
-                    Scores = 60
+                    Scores = 619
                 },
                 new WaiterInfo
                 {
-                    FirstName = "Evgeniy",
-                    LastName = "Pots",
+                    FirstName = "Елена",
+                    LastName = "Лобашева",
                     IsCurrentUser = false,
-                    Scores = 120
+                    Scores =1544
                 },
                 new WaiterInfo
                 {
-                    FirstName = "Petr",
-                    LastName = "Ivanov",
+                    FirstName = "Константин",
+                    LastName = "Ефимов",
+                    IsCurrentUser = false,
+                    Scores = 2480
+                },
+                new WaiterInfo
+                {
+                    FirstName = "Евгений",
+                    LastName = "Ботов",
+                    IsCurrentUser = false,
+                    Scores = 1256
+                },
+                new WaiterInfo
+                {
+                    FirstName = "Игорь",
+                    LastName = "Голдберг",
                     IsCurrentUser = true,
-                    Scores = 160
+                    Scores = 3672
                 },
             };
         }

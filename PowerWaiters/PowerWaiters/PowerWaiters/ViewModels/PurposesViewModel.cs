@@ -35,7 +35,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int purposeBlockHeight = 200;
+        private int purposeBlockHeight = 180;
         public int PurposeBlockHeight
         {
             get => purposeBlockHeight;

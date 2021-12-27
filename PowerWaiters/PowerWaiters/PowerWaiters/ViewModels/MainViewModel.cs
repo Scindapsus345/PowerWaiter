@@ -85,7 +85,7 @@ namespace PowerWaiters.ViewModels
                     Name = waiter.FullName,
                     Number = $"{i}.",
                     Scores = waiter.Scores,
-                    BackgroundColor = waiter.IsCurrentUser ? "#F0FFF0" : "#D4D4D4",
+                    BackgroundColor = waiter.IsCurrentUser ? "#F0FFF0" : "White",
                     BorderColor = GetColorByNumber(i)
                 };
             }
