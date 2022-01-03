@@ -28,7 +28,7 @@ namespace PowerWaiters.Services
                 new AchievementModel
                 {
                     Name = "Коллекционер",
-                    Description = "Достичь суммарный уровень достижений - 15",
+                    Description = "Суммарный уровень достижений - 15",
                     IconUrl = "https://yt3.ggpht.com/a/AATXAJwVmCcsA1IhkdWb63_FwfedCcSS2IS0aLggpA=s900-c-k-c0xffffffff-no-rj-mo",
                     Progress = 12,
                     Purpose = 15,
@@ -37,7 +37,7 @@ namespace PowerWaiters.Services
                 new AchievementModel
                 {
                     Name = "Ученик",
-                    Description = "проработать в ресторане 1 месяц",
+                    Description = "Проработать в ресторане 1 месяц",
                     IconUrl = "https://yt3.ggpht.com/a/AATXAJwVmCcsA1IhkdWb63_FwfedCcSS2IS0aLggpA=s900-c-k-c0xffffffff-no-rj-mo",
                     Progress = 27,
                     Purpose = 30,

@@ -13,7 +13,14 @@
                 <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">
                     <StackLayout Spacing="0">
                         <Label Text="Выручка" FontSize="26" TextColor="Black"/>
-                        <Label Text="{Binding RestourantStats.Revenue}" FontSize="42" TextColor="Black"/>
+                        <Label FontSize="42" TextColor="Black">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding RestourantStats.Revenue}"/>
+                                    <Span Text="р"/>
+                                </FormattedString>
+                            </Label.FormattedText> 
+                        </Label>
                     </StackLayout>
                 </Frame>
                 <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">

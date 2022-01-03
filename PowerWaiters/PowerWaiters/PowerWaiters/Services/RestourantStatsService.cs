@@ -10,7 +10,7 @@ namespace PowerWaiters.Services
             {
                 Name = "Italian Pizza",
                 GuestsCount = 555,
-                Revenue = 170
+                Revenue = 170539
             };
         }
     }
