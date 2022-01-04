@@ -65,7 +65,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int statsBlockHeight = 100;
+        private int statsBlockHeight = 120;
         public int StatsBlockHeight
         {
             get => statsBlockHeight;
@@ -105,9 +105,9 @@ namespace PowerWaiters.ViewModels
         }
 
         private StatisticsTimeSpan currentTimeSpan;
-        public int DayBtnBorderSize => currentTimeSpan == StatisticsTimeSpan.Day ? 2 : 0;
-        public int WeekBtnBorderSize => currentTimeSpan == StatisticsTimeSpan.Week ? 2 : 0;
-        public int MonthBtnBorderSize => currentTimeSpan == StatisticsTimeSpan.Month ? 2 : 0;
+        public string DayBtnColor => currentTimeSpan == StatisticsTimeSpan.Day ? "#E7D8FF" : "Transparent";
+        public string WeekBtnColor => currentTimeSpan == StatisticsTimeSpan.Week ? "#E7D8FF" : "Transparent";
+        public string MonthBtnColor => currentTimeSpan == StatisticsTimeSpan.Month ? "#E7D8FF" : "Transparent";
 
         public ProfileViewModel()
         {
@@ -121,24 +121,24 @@ namespace PowerWaiters.ViewModels
         {
             StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsService.GetStatistics(timeSpan));
             currentTimeSpan = timeSpan;
-            OnPropertyChanged(nameof(DayBtnBorderSize));
-            OnPropertyChanged(nameof(WeekBtnBorderSize));
-            OnPropertyChanged(nameof(MonthBtnBorderSize));
+            OnPropertyChanged(nameof(DayBtnColor));
+            OnPropertyChanged(nameof(WeekBtnColor));
+            OnPropertyChanged(nameof(MonthBtnColor));
         }
 
         private static List<StatisticsDisplayModel> GetStatisticDisplayModels(StatisticsModel statisticsModel)
         {
             var statisticsDisplayModels = new List<StatisticsDisplayModel>();
             if (statisticsModel.ServedGuests != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Обслуженные гости", statisticsModel.ServedGuests.Value.ToString()));
+                statisticsDisplayModels.Add(new StatisticsDisplayModel("Обслуженные гости", statisticsModel.ServedGuests.Value.ToString(), "guests_icon.png"));
             if (statisticsModel.DailyRevenue != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Дневная выручка", statisticsModel.DailyRevenue.Value.ToString()));
+                statisticsDisplayModels.Add(new StatisticsDisplayModel("Дневная выручка", statisticsModel.DailyRevenue.Value.ToString(), "cash_icon.png"));
             if (statisticsModel.DishesByGoList != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Блюд по Go листу", statisticsModel.DishesByGoList.Value.ToString()));
+                statisticsDisplayModels.Add(new StatisticsDisplayModel("Блюд по Go листу", statisticsModel.DishesByGoList.Value.ToString(), "golist_icon.png"));
             if (statisticsModel.OrdersClosed != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Заказов закрыто", statisticsModel.OrdersClosed.Value.ToString()));
+                statisticsDisplayModels.Add(new StatisticsDisplayModel("Заказов закрыто", statisticsModel.OrdersClosed.Value.ToString(), "orders_icon.png"));
             if (statisticsModel.DigitizedGuests != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Оцифрованные гости", statisticsModel.DigitizedGuests.Value.ToString()));
+                statisticsDisplayModels.Add(new StatisticsDisplayModel("Оцифрованные гости", statisticsModel.DigitizedGuests.Value.ToString(), "checkin_icon.png"));
             return statisticsDisplayModels;
         }
 

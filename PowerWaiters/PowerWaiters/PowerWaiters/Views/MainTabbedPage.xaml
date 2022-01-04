@@ -6,7 +6,7 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
             SelectedTabColor="Black"
-            BackgroundColor="#106000ff">
+            BackgroundColor="#036000ff">
     <views:ProfilePage IconImageSource="https://www.jing.fm/clipimg/full/419-4198835_clip-art-black-and-white-user-name-icon.png" Title="Профиль"/>
     <views:MainPage IconImageSource="https://pic.onlinewebfonts.com/svg/img_56797.png" Title="Главная"/>
     <views:PurposesPage IconImageSource="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Noun_108494_cc.svg/1200px-Noun_108494_cc.svg.png" Title="Цели"/>
