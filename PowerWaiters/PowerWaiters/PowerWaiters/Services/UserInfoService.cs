@@ -13,7 +13,8 @@ namespace PowerWaiters.Services
             LastName = "Голдберг",
             Description = "Официант",
             Scores = 3672,
-            AvatarUrl = "https://www.hotelberlin-sindelfingen.de/wp-content/uploads/sites/4/2015/08/Kellner.jpg"
+            Post = "Официант",
+            EmploymentDate = "27.02.2001"
         };
     }
 }

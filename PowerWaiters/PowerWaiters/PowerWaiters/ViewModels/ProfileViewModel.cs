@@ -23,15 +23,15 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private IEnumerable<AchievementModel> achievementModels;
-        public IEnumerable<AchievementModel> AchievementModels
+        private IEnumerable<AchievementDisplayModel> achievementDisplayModels;
+        public IEnumerable<AchievementDisplayModel> AchievementDisplayModels
         {
-            get => achievementModels;
+            get => achievementDisplayModels;
             set
             {
-                if (value == achievementModels)
+                if (value == achievementDisplayModels)
                     return;
-                achievementModels = value;
+                achievementDisplayModels = value;
                 UpdateAchievementsHeight();
                 OnPropertyChanged();
             }
@@ -111,35 +111,19 @@ namespace PowerWaiters.ViewModels
 
         public ProfileViewModel()
         {
-            StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsService.GetStatistics(StatisticsTimeSpan.Day));
-            AchievementModels = AchievementsService.GetAchievements();
+            StatisticsDisplayModels = StatisticsService.GetStatistics(StatisticsTimeSpan.Day).ConvertToStatisticsDisplayModels();
+            AchievementDisplayModels = AchievementsService.GetAchievements().Select(am => am.ConvertToDisplayModel());
             User = UserInfoService.GetUserInfo();
             UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
         }
 
         private void OnUpdateStatistics(StatisticsTimeSpan timeSpan)
         {
-            StatisticsDisplayModels = GetStatisticDisplayModels(StatisticsService.GetStatistics(timeSpan));
+            StatisticsDisplayModels = StatisticsService.GetStatistics(timeSpan).ConvertToStatisticsDisplayModels();
             currentTimeSpan = timeSpan;
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));
             OnPropertyChanged(nameof(MonthBtnColor));
-        }
-
-        private static List<StatisticsDisplayModel> GetStatisticDisplayModels(StatisticsModel statisticsModel)
-        {
-            var statisticsDisplayModels = new List<StatisticsDisplayModel>();
-            if (statisticsModel.ServedGuests != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Обслуженные гости", statisticsModel.ServedGuests.Value.ToString(), "guests_icon.png"));
-            if (statisticsModel.DailyRevenue != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Дневная выручка", statisticsModel.DailyRevenue.Value.ToString(), "cash_icon.png"));
-            if (statisticsModel.DishesByGoList != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Блюд по Go листу", statisticsModel.DishesByGoList.Value.ToString(), "golist_icon.png"));
-            if (statisticsModel.OrdersClosed != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Заказов закрыто", statisticsModel.OrdersClosed.Value.ToString(), "orders_icon.png"));
-            if (statisticsModel.DigitizedGuests != null)
-                statisticsDisplayModels.Add(new StatisticsDisplayModel("Оцифрованные гости", statisticsModel.DigitizedGuests.Value.ToString(), "checkin_icon.png"));
-            return statisticsDisplayModels;
         }
 
         private void UpdateStatisticsHeight()
@@ -148,6 +132,6 @@ namespace PowerWaiters.ViewModels
             StatisticsHeight = ((count / 2) + (count % 2)) * StatsBlockHeight;
         }
 
-        private void UpdateAchievementsHeight() => AchievementsHeight = AchievementModels.Count() * AchievementBlockHeight;
+        private void UpdateAchievementsHeight() => AchievementsHeight = AchievementDisplayModels.Count() * AchievementBlockHeight;
     }
 }

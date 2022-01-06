@@ -1,6 +1,6 @@
 ﻿namespace PowerWaiters.Models
 {
-    class StatisticsDisplayModel
+    public class StatisticsDisplayModel
     {
         public string Name { get; }
         public string Count { get; }
