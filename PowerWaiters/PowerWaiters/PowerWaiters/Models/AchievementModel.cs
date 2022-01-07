@@ -29,11 +29,11 @@ namespace PowerWaiters.Models
             switch (Level)
             {
                 case 1:
-                    return "bronze_achievement";
+                    return "bronze_achievements";
                 case 2:
-                    return "silver_achievement";
+                    return "silver_achievements";
                 default:
-                    return "gold_achievement";
+                    return "gold_achievements";
             }
         }
     } 

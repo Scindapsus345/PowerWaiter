@@ -18,13 +18,24 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="110" />
                     </Grid.ColumnDefinitions>
                     <StackLayout Grid.Column="0" Padding="0" Spacing="0">
-                        <Label Text="{Binding User.FullName}" FontSize="24" LineBreakMode="WordWrap" MaxLines="2" TextColor="Black" Margin="0,0,0,10"/>
-                        <Label Text="{Binding User.Post}" FontSize="16" LineBreakMode="WordWrap" MaxLines="3" TextColor="#A0000000"/>
-                        <Label Text="{Binding User.EmploymentDateString}" FontSize="16" LineBreakMode="WordWrap" MaxLines="3" TextColor="#A0000000"/>
+                        <Label Text="{Binding User.FullName}" FontSize="24" TextColor="Black" Margin="0,0,0,10"/>
+                        <Label Text="{Binding User.Post}" FontSize="16" TextColor="#A0000000"/>
+                        <Label Text="{Binding User.EmploymentDateString}" FontSize="16" TextColor="#A0000000"/>
+                        <StackLayout Padding="0" Spacing="5" Margin="0" Orientation="Horizontal">
+                            <Label TextColor="Black" FontSize="17">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Общий рейтинг: "/>
+                                        <Span Text="{Binding User.TotalScoresString}" TextColor="#6000FF"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Image Source="purple_cup" HeightRequest="20" WidthRequest="20"/>
+                        </StackLayout>
                     </StackLayout>
                     <Grid Grid.Column="1" 
                           VerticalOptions="Center" 
@@ -124,11 +135,11 @@
                                                     <Label.FormattedText>
                                                         <FormattedString>
                                                             <Span Text="{Binding ProgressString}" FontAttributes="Bold" TextColor="#6000FF" FontSize="20"/>
-                                                            <Span Text="{Binding ProgressString}" TextColor="#756000FF" FontSize="16"/>
+                                                            <Span Text="{Binding OfPurposeString}" TextColor="#756000FF" FontSize="16"/>
                                                         </FormattedString>
                                                     </Label.FormattedText>
                                                 </Label>
-                                                <progressBar:SfLinearProgressBar Progress="75" TrackColor="#60FF788E" TrackHeight="10" CornerRadius="10">
+                                                <progressBar:SfLinearProgressBar Progress="{Binding ProgressPercents}" TrackColor="#60FF788E" TrackHeight="10" CornerRadius="10">
                                                     <progressBar:SfLinearProgressBar.RangeColors>
                                                         <progressBar:RangeColorCollection>
                                                             <progressBar:RangeColor IsGradient="True" Color="#FF788E" Start="0" End="50"/>

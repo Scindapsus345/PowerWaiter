@@ -15,8 +15,10 @@
         public static string ToFriendlyString(this int number)
         {
             if (number > 1000000)
-                return $"{number / 1000000} {number / 1000} {number}";
-            return $"{number / 1000} {number}";
+                return $"{number / 1000000} {number % 1000000 / 1000} {number % 1000}";
+            if (number > 1000)
+                return $"{number / 1000} {number % 1000}";
+            return $"{number}";
         }
     }
 }

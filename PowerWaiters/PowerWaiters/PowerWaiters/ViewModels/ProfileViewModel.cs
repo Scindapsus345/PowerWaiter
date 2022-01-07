@@ -91,7 +91,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int achievementBlockHeight = 160;
+        private int achievementBlockHeight = 150;
         public int AchievementBlockHeight
         {
             get => achievementBlockHeight;
