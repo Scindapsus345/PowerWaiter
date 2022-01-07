@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PowerWaiters.Models
+﻿namespace PowerWaiters.Models
 {
     class AchievementDisplayModel
     {
@@ -10,8 +6,9 @@ namespace PowerWaiters.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string IconUrl { get; set; }
-        public int Prize { get; set; }
         public string ProgressString { get; set; }
         public string LevelString { get; set; }
+        public string OfPurposeString { get; set; }
+        public string ProgressPercents { get; set; }
     }
 }

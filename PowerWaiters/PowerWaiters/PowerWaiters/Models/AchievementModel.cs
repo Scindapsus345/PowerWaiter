@@ -1,4 +1,6 @@
-﻿namespace PowerWaiters.Models
+﻿using PowerWaiters.Extensions;
+
+namespace PowerWaiters.Models
 {
     class AchievementModel
     {
@@ -9,18 +11,17 @@
         public int Progress { get; set; }
         public int Level { get; set; }
         public int Prize { get; set; }
-        public string ProgressString => $"{Progress} / {Purpose}";
-        public string LevelString => $"Уровень: {Level}";
 
         public AchievementDisplayModel ConvertToDisplayModel() => new AchievementDisplayModel
         {
             Name = Name,
             Description = Description,
             IconUrl = IconUrl,
-            Prize = Prize,
-            ProgressString = $"{Progress}/{Purpose}",
+            ProgressString = $"{Progress.ToFriendlyString()}",
             LevelString = $"LEVEL {Level}",
-            BackgroundImageName = GetBackgroundImageNameByLevel()
+            BackgroundImageName = GetBackgroundImageNameByLevel(),
+            OfPurposeString = $"/{Purpose.ToFriendlyString()}",
+            ProgressPercents = ((int)(((double)Progress)/Purpose * 100)).ToString()
         };
 
         private string GetBackgroundImageNameByLevel()
