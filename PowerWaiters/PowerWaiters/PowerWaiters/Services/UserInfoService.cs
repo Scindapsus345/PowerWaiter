@@ -11,9 +11,8 @@ namespace PowerWaiters.Services
         {
             FirstName = "Игорь",
             LastName = "Голдберг",
-            Description = "Официант",
-            Scores = 3672,
             Post = "Официант",
+            TotalScores = 3672,
             EmploymentDate = "27.02.2001"
         };
     }
