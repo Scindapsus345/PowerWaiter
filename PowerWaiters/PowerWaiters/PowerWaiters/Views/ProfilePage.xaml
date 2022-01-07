@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels"
              xmlns:models="clr-namespace:PowerWaiters.Models" 
-             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
              x:Class="PowerWaiters.Views.ProfilePage">
     <ContentPage.BindingContext>
         <viewmodels:ProfileViewModel/>
@@ -109,17 +110,32 @@
                                         <Grid Margin="10">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="100"/>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <Grid Padding="0" VerticalOptions="Center" WidthRequest="100" HeightRequest="100">
-                                                <Image Source="bronze_achievement" VerticalOptions="Fill" HorizontalOptions="Fill"/>
-                                                <Image Source="https://imgcdn.wangyeyixia.com/aHR0cDovL3BuZ2ltZy5jb20vdXBsb2Fkcy9jcm93bi9jcm93bl9QTkcyMzg2OC5wbmc%3D.png?w=400" HeightRequest="50" WidthRequest="50" Margin="10" VerticalOptions="Start"/>
-                                                <Label Text="LEVEL 1" VerticalOptions="End" HorizontalOptions="Center" Margin="10" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+                                                <Image Source="{Binding BackgroundImageName}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                                                <Image Source="{Binding IconUrl}" HeightRequest="50" WidthRequest="50" Margin="10" VerticalOptions="Start"/>
+                                                <Label Text="{Binding LevelString}" VerticalOptions="End" HorizontalOptions="Center" Margin="10" TextColor="White" FontSize="16" FontAttributes="Bold"/>
                                             </Grid>
-                                            <StackLayout Grid.Column="1" VerticalOptions="Center" Padding="5" WidthRequest="">
-                                                <Label Text="Супер пупер" TextColor="Black" FontSize="20"/>
-                                                <Label Text="Описание Описание Описание Описание Описание"/>
-                                                <ProgressBar ProgressColor="#E8697C" Progress="0.5"/>
+                                            <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Padding="5" Spacing="0">
+                                                <Label Text="{Binding Name}" TextColor="Black" FontSize="20"/>
+                                                <Label Text="{Binding Description}" Margin="0, 5"/>
+                                                <Label HorizontalOptions="Center" Margin="0">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding ProgressString}" FontAttributes="Bold" TextColor="#6000FF" FontSize="20"/>
+                                                            <Span Text="{Binding ProgressString}" TextColor="#756000FF" FontSize="16"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <progressBar:SfLinearProgressBar Progress="75" TrackColor="#60FF788E" TrackHeight="10" CornerRadius="10">
+                                                    <progressBar:SfLinearProgressBar.RangeColors>
+                                                        <progressBar:RangeColorCollection>
+                                                            <progressBar:RangeColor IsGradient="True" Color="#FF788E" Start="0" End="50"/>
+                                                            <progressBar:RangeColor IsGradient="True" Color="#D25A6B" Start="50" End="100"/>
+                                                        </progressBar:RangeColorCollection>
+                                                    </progressBar:SfLinearProgressBar.RangeColors>
+                                                </progressBar:SfLinearProgressBar>
                                             </StackLayout>
                                         </Grid>
                                     </Grid>

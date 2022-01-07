@@ -39,8 +39,8 @@ namespace PowerWaiters.ViewModels
 
         public ICommand UpdateStatistics { get; }
 
-        private UserInfo user;
-        public UserInfo User
+        private UserDisplayModel user;
+        public UserDisplayModel User
         {
             get => user;
             set
@@ -65,7 +65,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int statsBlockHeight = 120;
+        private int statsBlockHeight = 100;
         public int StatsBlockHeight
         {
             get => statsBlockHeight;
@@ -91,7 +91,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int achievementBlockHeight = 210;
+        private int achievementBlockHeight = 160;
         public int AchievementBlockHeight
         {
             get => achievementBlockHeight;
@@ -113,7 +113,7 @@ namespace PowerWaiters.ViewModels
         {
             StatisticsDisplayModels = StatisticsService.GetStatistics(StatisticsTimeSpan.Day).ConvertToStatisticsDisplayModels();
             AchievementDisplayModels = AchievementsService.GetAchievements().Select(am => am.ConvertToDisplayModel());
-            User = UserInfoService.GetUserInfo();
+            User = UserInfoService.GetUserInfo().ConvertToDisplayModel();
             UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
         }
 
