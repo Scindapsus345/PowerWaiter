@@ -9,6 +9,6 @@
         public string ProgressString { get; set; }
         public string LevelString { get; set; }
         public string OfPurposeString { get; set; }
-        public string ProgressPercents { get; set; }
+        public string ProgressPercentages { get; set; }
     }
 }

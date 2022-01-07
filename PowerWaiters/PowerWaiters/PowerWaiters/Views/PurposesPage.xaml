@@ -2,62 +2,68 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels"
-             xmlns:models="clr-namespace:PowerWaiters.Models"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
              x:Class="PowerWaiters.Views.PurposesPage">
+    <ContentPage.BindingContext>
+        <viewmodels:PurposesViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="20, 20" >
-                <Label Text="Цели" FontSize="36" TextColor="Black" FontAttributes="Bold"/>
-
+            <StackLayout Padding="0, 20" >
+                <Label Text="Мои цели" Margin="20, 0" FontSize="30" TextColor="Black" FontAttributes="Bold"/>
                 <CollectionView ItemsSource="{Binding PurposeModels}" HeightRequest="{Binding PurposesHeight}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PurposesViewModel}}, Path=PurposeBlockHeight}">
-                                <Frame Padding="0" Margin="0, 10" CornerRadius="15" HasShadow="False" BackgroundColor="{Binding BorderColor}" VerticalOptions="FillAndExpand">
-                                    <Frame Padding="0" Margin="3, 3" CornerRadius="13" HasShadow="False" VerticalOptions="FillAndExpand">
-                                        <Grid Padding="10" BackgroundColor="{Binding BackgroundColor}" VerticalOptions="FillAndExpand">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackLayout Grid.Column="0" Padding="10, 0, 0, 0" VerticalOptions="FillAndExpand">
-                                                <Label Text="{Binding Name}" 
-                                                   FontSize="24" 
-                                                   LineBreakMode="WordWrap" 
-                                                   TextColor="Black"/>
-                                                <Label Text="{Binding Description}" 
-                                                   FontSize="18" 
-                                                   LineBreakMode="WordWrap" 
-                                                   MaxLines="2" 
-                                                   TextColor="Black"/>
-                                                <Label Text="{Binding ProgressString}"
-                                                   FontSize="18" 
-                                                   LineBreakMode="WordWrap" 
-                                                   MaxLines="3" 
-                                                   TextColor="{Binding ProgressTextColor}" 
-                                                   VerticalOptions="End"/>
-                                                <Label Text="{Binding DeadlineString}"
-                                                   FontSize="18" 
-                                                   LineBreakMode="WordWrap" 
-                                                   MaxLines="3" 
-                                                   TextColor="{Binding ProgressTextColor}" 
-                                                   VerticalOptions="End"/>
+                                <yummy:PancakeView Padding="15" Margin="10,0,10,15" CornerRadius="15" BackgroundColor="White">
+                                    <yummy:PancakeView.Shadow>
+                                        <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
+                                    </yummy:PancakeView.Shadow>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Spacing="10" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" FontSize="18" TextColor="Black" FontAttributes="Bold"/>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding ProgressString}" FontAttributes="Bold" TextColor="#6000FF" FontSize="22"/>
+                                                        <Span Text="{Binding PurposeString, StringFormat='/{0}'}" TextColor="#756000FF" FontSize="18"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding PrizeString}" FontSize="15" TextColor="#5B2B2B2B"/>
+                                                <Image Source="gray_cup" HeightRequest="20" WidthRequest="20" Margin="0,0,15,0"/>
+                                                <Label Text="{Binding Deadline}" FontSize="15" TextColor="#5B2B2B2B"/>
+                                                <Image Source="clock" HeightRequest="20" WidthRequest="20" Margin="0,0,15,0"/>
                                             </StackLayout>
-                                            <Label Grid.Column="1" 
-                                                   VerticalOptions="Center" 
-                                                   HorizontalOptions="Center"
-                                                   Padding="0" 
-                                                   Margin="0"
-                                                   TextColor="Black"
-                                                   FontSize="36"
-                                                   FontAttributes="Bold"
-                                                   Text ="{Binding Prize}"/>
-                                        </Grid>
-                                    </Frame>
-                                </Frame>
+                                        </StackLayout>
+                                        <progressBar:SfCircularProgressBar 
+                                            Progress="{Binding Percentages}" 
+                                            Grid.Column="1" 
+                                            HeightRequest="70"
+                                            WidthRequest="70"
+                                            Margin="10"
+                                            TrackOuterRadius="1" 
+                                            IndicatorOuterRadius="1"
+                                            TrackInnerRadius="0.85"
+                                            IndicatorInnerRadius="0.85"
+                                            TrackColor="#146000FF">
+                                            <progressBar:SfCircularProgressBar.RangeColors>
+                                                <progressBar:RangeColorCollection>
+                                                    <progressBar:RangeColor IsGradient="True" Color="#FF98A9" Start="0" End="50"/>
+                                                    <progressBar:RangeColor IsGradient="True" Color="#D25A6B" Start="50" End="100"/>
+                                                </progressBar:RangeColorCollection>
+                                            </progressBar:SfCircularProgressBar.RangeColors>
+                                            <progressBar:SfCircularProgressBar.Content>
+                                                <Label Text="{Binding Percentages, StringFormat='{0}%'}" TextColor="#6000FF" FontSize="18"/>
+                                            </progressBar:SfCircularProgressBar.Content>
+                                        </progressBar:SfCircularProgressBar>
+                                    </Grid>
+                                </yummy:PancakeView>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

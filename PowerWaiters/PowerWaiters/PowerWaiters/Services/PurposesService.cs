@@ -12,20 +12,18 @@ namespace PowerWaiters.Services
                 new PurposeModel
                 {
                     Name = "Выручка",
-                    Description = "Заработать 1.000.000р",
                     Prize = 3500,
                     Progress = 891563,
                     Purpose = 1000000,
-                    Deadline = DateTime.Now + TimeSpan.FromDays(5)
+                    Deadline = "27.02.2023"
                 },
                 new PurposeModel
                 {
-                    Name = "Гости",
-                    Description = "Обслужить 2000 гостей",
+                    Name = "Обслуженные гости",
                     Prize = 2000,
                     Progress = 2699,
                     Purpose = 2000,
-                    Deadline = DateTime.Now
+                    Deadline = "12.05.2023"
                 }
             };
         }

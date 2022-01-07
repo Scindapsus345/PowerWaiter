@@ -8,8 +8,8 @@ namespace PowerWaiters.ViewModels
 {
     class PurposesViewModel : BindableObject
     {
-        private IEnumerable<PurposeModel> purposeModels;
-        public IEnumerable<PurposeModel> PurposeModels
+        private IEnumerable<PurposeDisplayModel> purposeModels;
+        public IEnumerable<PurposeDisplayModel> PurposeModels
         {
             get => purposeModels;
             set
@@ -35,7 +35,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int purposeBlockHeight = 180;
+        private int purposeBlockHeight = 150;
         public int PurposeBlockHeight
         {
             get => purposeBlockHeight;
@@ -50,7 +50,7 @@ namespace PowerWaiters.ViewModels
 
         public PurposesViewModel()
         {
-            PurposeModels = PurposesService.GetPurposes();
+            PurposeModels = PurposesService.GetPurposes().Select(p => p.ConvertToDisplayModel());
         }
 
         private void UpdatePurposesHeight() => PurposesHeight = PurposeModels.Count() * PurposeBlockHeight;

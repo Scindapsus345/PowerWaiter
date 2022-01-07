@@ -21,7 +21,7 @@ namespace PowerWaiters.Models
             LevelString = $"LEVEL {Level}",
             BackgroundImageName = GetBackgroundImageNameByLevel(),
             OfPurposeString = $"/{Purpose.ToFriendlyString()}",
-            ProgressPercents = ((int)(((double)Progress)/Purpose * 100)).ToString()
+            ProgressPercentages = ((int)(((double)Progress)/Purpose * 100)).ToString()
         };
 
         private string GetBackgroundImageNameByLevel()

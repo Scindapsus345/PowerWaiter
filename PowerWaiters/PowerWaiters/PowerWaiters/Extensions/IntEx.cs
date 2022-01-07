@@ -1,4 +1,6 @@
-﻿namespace PowerWaiters.Extensions
+﻿using System.Text;
+
+namespace PowerWaiters.Extensions
 {
     static class IntEx
     {
@@ -14,11 +16,16 @@
 
         public static string ToFriendlyString(this int number)
         {
-            if (number > 1000000)
-                return $"{number / 1000000} {number % 1000000 / 1000} {number % 1000}";
-            if (number > 1000)
-                return $"{number / 1000} {number % 1000}";
-            return $"{number}";
+            var str = number.ToString();
+            var result = new StringBuilder();
+            var delay = str.Length % 3;
+            for (var i = 0; i < str.Length; i++)
+            {
+                result.Append(str[i]);
+                if ((i + 1 - delay) % 3 == 0 && i != str.Length - 1)
+                    result.Append(' ');
+            }
+            return result.ToString();
         }
     }
 }

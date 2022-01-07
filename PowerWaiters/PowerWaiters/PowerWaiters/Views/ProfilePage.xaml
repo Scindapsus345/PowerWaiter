@@ -11,8 +11,8 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10, 10" >
-                <Label Text="Мой профиль" FontSize="30" TextColor="Black" Margin="0, 10"/>
+            <StackLayout Padding="10, 20" >
+                <Label Text="Мой профиль" FontSize="30" TextColor="Black" Margin="0, 10" FontAttributes="Bold"/>
                 <Grid Padding="0" Margin="0, 10">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -54,7 +54,7 @@
                                     <yummy:GradientStop Color="#D25A6B" Offset="1"/>
                                 </yummy:GradientStopCollection>
                             </yummy:PancakeView.BackgroundGradientStops>
-                            <Label Text="П" TextColor="White" FontSize="50" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,4"/>
+                            <Label Text="{Binding User.FirstSymbol}" TextColor="White" FontSize="50" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,4"/>
                         </yummy:PancakeView>
                     </Grid>
                 </Grid>
@@ -139,7 +139,7 @@
                                                         </FormattedString>
                                                     </Label.FormattedText>
                                                 </Label>
-                                                <progressBar:SfLinearProgressBar Progress="{Binding ProgressPercents}" TrackColor="#60FF788E" TrackHeight="10" CornerRadius="10">
+                                                <progressBar:SfLinearProgressBar Progress="{Binding ProgressPercentages}" TrackColor="#60FF788E" TrackHeight="10" CornerRadius="10">
                                                     <progressBar:SfLinearProgressBar.RangeColors>
                                                         <progressBar:RangeColorCollection>
                                                             <progressBar:RangeColor IsGradient="True" Color="#FF788E" Start="0" End="50"/>
