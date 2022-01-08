@@ -18,7 +18,7 @@ namespace PowerWaiters.Extensions
         {
             var str = number.ToString();
             var result = new StringBuilder();
-            var delay = str.Length % 3;
+            var delay = str[0] == '-' ? str.Length % 3 + 1 : str.Length % 3;
             for (var i = 0; i < str.Length; i++)
             {
                 result.Append(str[i]);

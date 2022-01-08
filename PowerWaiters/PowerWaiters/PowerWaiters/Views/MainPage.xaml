@@ -2,63 +2,116 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PowerWaiters.Views.MainPage"
+             xmlns:models="clr-namespace:PowerWaiters.Models" 
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
              xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels">
     <ContentPage.BindingContext>
         <viewmodels:MainViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="20, 20" Spacing="20">
-                <Label Text="{Binding RestourantStats.Name}" FontSize="40" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
-                <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">
-                    <StackLayout Spacing="0">
-                        <Label Text="Выручка" FontSize="26" TextColor="Black"/>
-                        <Label FontSize="42" TextColor="Black">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding RestourantStats.Revenue}"/>
-                                    <Span Text="р"/>
-                                </FormattedString>
-                            </Label.FormattedText> 
-                        </Label>
-                    </StackLayout>
-                </Frame>
-                <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">
-                    <StackLayout Spacing="0">
-                        <Label Text="Количество обслужанных гостей" FontSize="26" TextColor="Black"/>
-                        <Label Text="{Binding RestourantStats.GuestsCount}" FontSize="42" TextColor="Black"/>
-                    </StackLayout>
-                </Frame>
-                <Frame BackgroundColor="#F1F1F1" CornerRadius="15" Padding="10">
-                    <StackLayout>
-                        <Label Text="Лидерборд" FontSize="30" TextColor="Black" HorizontalOptions="Center"/>
-                        <CollectionView ItemsSource="{Binding LeaderboardItems}" HeightRequest="{Binding LeaderboardHeight}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=LeaderboardItemHeight, Mode=TwoWay}">
-                                        <Frame BackgroundColor="{Binding BorderColor}" CornerRadius="10" Padding="0" Margin="5">
-                                            <Frame BackgroundColor="{Binding BackgroundColor}" CornerRadius="6" Margin="5, 5" Padding="10">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1*"/>
-                                                        <ColumnDefinition Width="8*"/>
-                                                        <ColumnDefinition Width="2*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Label Text="{Binding Number}" TextColor="Black" FontSize="18" VerticalOptions="Center"/>
-                                                    <Label Grid.Column="1" Text="{Binding Name}" TextColor="Black" FontSize="18" VerticalOptions="Center"/>
-                                                    <Label Grid.Column="2" Text="{Binding Scores}" TextColor="Black" FontSize="18" HorizontalOptions="End" VerticalOptions="Center"/>
-                                                </Grid>
-                                            </Frame>
-                                        </Frame>
+            <StackLayout Padding="0, 20" Spacing="5">
+                <Label Text="{Binding RestourantInfo.Name}" Margin="20,0" FontSize="30" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold"/>
+                <Label Text="Показатели ресторана" Margin="15,0" FontSize="24" TextColor="Black" FontAttributes="Bold"/>
+                <CollectionView ItemsSource="{Binding RestourantStats}" HeightRequest="{Binding RestourantStatsHeight}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=RestourantStatsBlockHeight}">
+                                <yummy:PancakeView Padding="15" Margin="15,0,15,15" CornerRadius="15" BackgroundColor="White">
+                                    <yummy:PancakeView.Shadow>
+                                        <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
+                                    </yummy:PancakeView.Shadow>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Spacing="10" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" FontSize="18" TextColor="Black" FontAttributes="Bold"/>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding ProgressString}" FontAttributes="Bold" TextColor="#6000FF" FontSize="22"/>
+                                                        <Span Text="{Binding PurposeString, StringFormat='/{0}'}" TextColor="#756000FF" FontSize="18"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Deadline}" FontSize="15" TextColor="#5B2B2B2B"/>
+                                                <Image Source="clock" HeightRequest="20" WidthRequest="20" Margin="0,0,15,0"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <progressBar:SfCircularProgressBar 
+                                            Progress="{Binding Percentages}" 
+                                            Grid.Column="1" 
+                                            HeightRequest="70"
+                                            WidthRequest="70"
+                                            Margin="10"
+                                            TrackOuterRadius="1" 
+                                            IndicatorOuterRadius="1"
+                                            TrackInnerRadius="0.85"
+                                            IndicatorInnerRadius="0.85"
+                                            TrackColor="#146000FF">
+                                            <progressBar:SfCircularProgressBar.RangeColors>
+                                                <progressBar:RangeColorCollection>
+                                                    <progressBar:RangeColor IsGradient="True" Color="#FF98A9" Start="0" End="50"/>
+                                                    <progressBar:RangeColor IsGradient="True" Color="#D25A6B" Start="50" End="100"/>
+                                                </progressBar:RangeColorCollection>
+                                            </progressBar:SfCircularProgressBar.RangeColors>
+                                            <progressBar:SfCircularProgressBar.Content>
+                                                <Label Text="{Binding Percentages, StringFormat='{0}%'}" TextColor="#6000FF" FontSize="18"/>
+                                            </progressBar:SfCircularProgressBar.Content>
+                                        </progressBar:SfCircularProgressBar>
                                     </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </StackLayout>
-                </Frame>
+                                </yummy:PancakeView>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label Text="Лидерборд официантов" Margin="15,0" FontSize="24" TextColor="Black" FontAttributes="Bold"/>
+                <StackLayout Orientation="Horizontal" HeightRequest="40" Margin="15, 0">
+                    <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black" Padding="5" BackgroundColor="{Binding DayBtnColor}" CornerRadius="5" HeightRequest="50"
+                                Command="{Binding UpdateLeaderboard}" CommandParameter="{x:Static models:StatisticsTimeSpan.Day}"/>
+                    <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black" Padding="5" BackgroundColor="{Binding WeekBtnColor}" CornerRadius="5" HeightRequest="50"
+                                Command="{Binding UpdateLeaderboard}" CommandParameter="{x:Static models:StatisticsTimeSpan.Week}"/>
+                    <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black" Padding="5" BackgroundColor="{Binding MonthBtnColor}" CornerRadius="5" HeightRequest="50"
+                                Command="{Binding UpdateLeaderboard}" CommandParameter="{x:Static models:StatisticsTimeSpan.Month}"/>
+                </StackLayout>
+                <yummy:PancakeView Padding="0" Margin="15, 5" CornerRadius="15" BackgroundColor="White">
+                    <yummy:PancakeView.Shadow>
+                        <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
+                    </yummy:PancakeView.Shadow>
+                    <CollectionView ItemsSource="{Binding LeaderboardItems}" HeightRequest="{Binding LeaderboardHeight}" Margin="5, 0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=LeaderboardItemHeight}">
+                                    <StackLayout Spacing="0">
+                                        <Frame Margin="5, 7" BackgroundColor="{Binding BackgroundColor}" CornerRadius="15" Padding="10, 10" HasShadow="False">
+                                            <Grid Margin="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding Number}" TextColor="Black" FontSize="18" VerticalOptions="Center"/>
+                                                <StackLayout Orientation="Horizontal" Grid.Column="1">
+                                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="16" VerticalOptions="Center"/>
+                                                    <Image Source="{Binding CupName}" HeightRequest="20" WidthRequest="20"/>
+                                                </StackLayout>
+                                                <Label Grid.Column="2" Text="{Binding ScoresString}" TextColor="#6000FF" FontSize="18" HorizontalOptions="End" VerticalOptions="Center"/>
+                                            </Grid>
+                                        </Frame>
+                                        <Frame BackgroundColor="#0C6000FF" HeightRequest="2" Padding="0" Margin="50, 0, 20, 0"/>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </yummy:PancakeView>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

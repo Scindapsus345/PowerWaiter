@@ -1,5 +1,5 @@
 ﻿using PowerWaiters.Extensions;
-using System;
+using PowerWaiters.Helpers;
 
 namespace PowerWaiters.Models
 {
@@ -10,7 +10,6 @@ namespace PowerWaiters.Models
         public int Purpose { get; set; }
         public int Progress { get; set; }
         public string Deadline { get; set; }
-        public int Percentages => (int)(((double)Progress) / Purpose * 100);
 
         public PurposeDisplayModel ConvertToDisplayModel() => new PurposeDisplayModel
         {
@@ -19,7 +18,7 @@ namespace PowerWaiters.Models
             PurposeString = Purpose.ToFriendlyString(),
             ProgressString = Progress.ToFriendlyString(),
             Deadline = Deadline,
-            Percentages = ((int)(((double)Progress) / Purpose * 100)).ToString()
+            Percentages = PercentHelper.GetPercentages(Progress, Purpose).ToString()
         };
     }
 }

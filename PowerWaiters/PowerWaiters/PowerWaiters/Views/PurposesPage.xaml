@@ -15,7 +15,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PurposesViewModel}}, Path=PurposeBlockHeight}">
-                                <yummy:PancakeView Padding="15" Margin="10,0,10,15" CornerRadius="15" BackgroundColor="White">
+                                <yummy:PancakeView Padding="15" Margin="15,0,15,15" CornerRadius="15" BackgroundColor="White">
                                     <yummy:PancakeView.Shadow>
                                         <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
                                     </yummy:PancakeView.Shadow>

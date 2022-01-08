@@ -1,4 +1,5 @@
 ﻿using PowerWaiters.Extensions;
+using PowerWaiters.Helpers;
 
 namespace PowerWaiters.Models
 {
@@ -21,7 +22,7 @@ namespace PowerWaiters.Models
             LevelString = $"LEVEL {Level}",
             BackgroundImageName = GetBackgroundImageNameByLevel(),
             OfPurposeString = $"/{Purpose.ToFriendlyString()}",
-            ProgressPercentages = ((int)(((double)Progress)/Purpose * 100)).ToString()
+            ProgressPercentages = PercentHelper.GetPercentages(Progress, Purpose).ToString()
         };
 
         private string GetBackgroundImageNameByLevel()

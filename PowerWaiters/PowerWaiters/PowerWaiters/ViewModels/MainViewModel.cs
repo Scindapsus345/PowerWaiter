@@ -1,15 +1,18 @@
-﻿using PowerWaiters.Models;
+﻿using PowerWaiters.Extensions;
+using PowerWaiters.Models;
 using PowerWaiters.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace PowerWaiters.ViewModels
 {
     class MainViewModel : BindableObject
     {
-        private RestourantStatsModel restourantStats;
-        public RestourantStatsModel RestourantStats
+        public RestourantInfo RestourantInfo { get; }
+        private IEnumerable<RestourantStatsDisplayModel> restourantStats;
+        public IEnumerable<RestourantStatsDisplayModel> RestourantStats
         {
             get => restourantStats;
             set
@@ -17,6 +20,7 @@ namespace PowerWaiters.ViewModels
                 if (value == restourantStats)
                     return;
                 restourantStats = value;
+                UpdateRestourantStatsHeight();
                 OnPropertyChanged();
             }
         }
@@ -48,7 +52,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int leaderboardItemHeight = 70;
+        private int leaderboardItemHeight = 60;
         public int LeaderboardItemHeight
         {
             get => leaderboardItemHeight;
@@ -61,15 +65,58 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        public MainViewModel()
+        private int restourantStatsHeight;
+        public int RestourantStatsHeight
         {
-            LeaderboardItems = GetLeaderboardItems();
-            RestourantStats = RestourantStatsService.GetRestourantStats();
+            get => restourantStatsHeight;
+            set
+            {
+                if (value == restourantStatsHeight)
+                    return;
+                restourantStatsHeight = value;
+                OnPropertyChanged();
+            }
         }
 
-        private IEnumerable<LeaderboardItem> GetLeaderboardItems()
+        private int restourantStatsBlockHeight = 150;
+        public int RestourantStatsBlockHeight
         {
-            var waiters = WaiterInfoService.GetWaiters();
+            get => restourantStatsBlockHeight;
+            set
+            {
+                if (value == restourantStatsBlockHeight)
+                    return;
+                restourantStatsBlockHeight = value;
+                OnPropertyChanged();
+            }
+        }
+        public ICommand UpdateLeaderboard { get; }
+
+        private StatisticsTimeSpan currentTimeSpan = StatisticsTimeSpan.Day;
+        public string DayBtnColor => currentTimeSpan == StatisticsTimeSpan.Day ? "#E7D8FF" : "Transparent";
+        public string WeekBtnColor => currentTimeSpan == StatisticsTimeSpan.Week ? "#E7D8FF" : "Transparent";
+        public string MonthBtnColor => currentTimeSpan == StatisticsTimeSpan.Month ? "#E7D8FF" : "Transparent";
+
+        public MainViewModel()
+        {
+            LeaderboardItems = GetLeaderboardItems(StatisticsTimeSpan.Day);
+            RestourantInfo = RestourantInfoService.GetRestourantStats();
+            RestourantStats = RestourantInfo.RestourantStatsModels.Select(x => x.ConvertToDisplayModel());
+            UpdateLeaderboard = new Command<StatisticsTimeSpan>(OnUpdateLeaderboard);
+        }
+
+        private void OnUpdateLeaderboard(StatisticsTimeSpan timeSpan)
+        {
+            LeaderboardItems = GetLeaderboardItems(timeSpan);
+            currentTimeSpan = timeSpan;
+            OnPropertyChanged(nameof(DayBtnColor));
+            OnPropertyChanged(nameof(WeekBtnColor));
+            OnPropertyChanged(nameof(MonthBtnColor));
+        }
+
+        private IEnumerable<LeaderboardItem> GetLeaderboardItems(StatisticsTimeSpan timeSpan)
+        {
+            var waiters = WaiterInfoService.GetWaiters(timeSpan);
             return ConvertToLeaderboardItems(waiters);
         }
 
@@ -83,28 +130,31 @@ namespace PowerWaiters.ViewModels
                 {
                     IsCurrentUser = waiter.IsCurrentUser,
                     Name = waiter.FullName,
-                    Number = $"{i}.",
-                    Scores = waiter.Scores,
-                    BackgroundColor = waiter.IsCurrentUser ? "#F0FFF0" : "White",
-                    BorderColor = GetColorByNumber(i)
+                    Number = i.ToString(),
+                    ScoresString = waiter.Scores.ToXPString(),
+                    BackgroundColor = waiter.IsCurrentUser ? "#0C6000FF" : "Transparent",
+                    CupName = GetCupNameNumber(i)
                 };
             }
         }
 
-        private string GetColorByNumber(int number)
+        private string GetCupNameNumber(int i)
         {
-            switch (number)
+            switch (i)
             {
                 case 1:
-                    return "#FFD700";
+                    return "gold_cup";
                 case 2:
-                    return "#C0C0C0";
+                    return "silver_cup";
                 case 3:
-                    return "#CD7F32";
+                    return "bronze_cup";
                 default:
-                    return "#F1F1F1";
+                    return "";
             }
+
         }
+
         private void UpdateLeaderboardHeight() => LeaderboardHeight = LeaderboardItems.Count() * LeaderboardItemHeight;
+        private void UpdateRestourantStatsHeight() => RestourantStatsHeight = RestourantStats.Count() * restourantStatsBlockHeight;
     }
 }

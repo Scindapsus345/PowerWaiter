@@ -5,7 +5,7 @@ namespace PowerWaiters.Services
 {
     static class WaiterInfoService
     {
-        public static IEnumerable<WaiterInfo> GetWaiters()
+        public static IEnumerable<WaiterInfo> GetWaiters(StatisticsTimeSpan timeSpan)
         {
             return new List<WaiterInfo>
             {
@@ -14,49 +14,49 @@ namespace PowerWaiters.Services
                     FirstName = "Игорь",
                     LastName = "Замощанский",
                     IsCurrentUser = false,
-                    Scores = 112
+                    Scores = 112 + ((int)timeSpan)
                 },
                 new WaiterInfo
                 {
                     FirstName = "Арслан",
                     LastName = "Байкенов",
                     IsCurrentUser = false,
-                    Scores = 8
+                    Scores = 8 + ((int)timeSpan)
                 },
                 new WaiterInfo
                 {
                     FirstName = "Александр",
                     LastName = "Рыбалко",
                     IsCurrentUser = false,
-                    Scores = 619
+                    Scores = 619 + ((int)timeSpan)
                 },
                 new WaiterInfo
                 {
                     FirstName = "Елена",
                     LastName = "Лобашева",
                     IsCurrentUser = false,
-                    Scores =1544
+                    Scores =1544 + ((int)timeSpan)
                 },
                 new WaiterInfo
                 {
                     FirstName = "Константин",
                     LastName = "Ефимов",
                     IsCurrentUser = false,
-                    Scores = 2480
+                    Scores = 2480 + ((int)timeSpan)
                 },
                 new WaiterInfo
                 {
                     FirstName = "Евгений",
                     LastName = "Ботов",
                     IsCurrentUser = false,
-                    Scores = 1256
+                    Scores = 1256 + ((int)timeSpan)
                 },
                 new WaiterInfo
                 {
                     FirstName = "Игорь",
                     LastName = "Голдберг",
                     IsCurrentUser = true,
-                    Scores = 3672
+                    Scores = 3672 + ((int)timeSpan)
                 },
             };
         }
