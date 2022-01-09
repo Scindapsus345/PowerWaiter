@@ -2,6 +2,7 @@
 using PowerWaiters.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -9,6 +10,20 @@ namespace PowerWaiters.ViewModels
 {
     class ProfileViewModel : BindableObject
     {
+        private StatisticsModel statisticsModel;
+        public StatisticsModel StatisticsModel
+        {
+            get => statisticsModel;
+            set
+            {
+                if (value == statisticsModel)
+                    return;
+                statisticsModel = value;
+                StatisticsDisplayModels = value.ConvertToStatisticsDisplayModels();
+                OnPropertyChanged();
+            }
+        }
+
         private IEnumerable<StatisticsDisplayModel> statisticsDisplayModels;
         public IEnumerable<StatisticsDisplayModel> StatisticsDisplayModels
         {
@@ -19,6 +34,20 @@ namespace PowerWaiters.ViewModels
                     return;
                 statisticsDisplayModels = value;
                 UpdateStatisticsHeight();
+                OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<AchievementModel> achievementModels;
+        public IEnumerable<AchievementModel> AchievementModels
+        {
+            get => achievementModels;
+            set
+            {
+                if (value == achievementModels)
+                    return;
+                achievementModels = value;
+                AchievementDisplayModels = value.Select(am => am.ConvertToDisplayModel());
                 OnPropertyChanged();
             }
         }
@@ -37,17 +66,29 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        public ICommand UpdateStatistics { get; }
-
-        private UserDisplayModel user;
-        public UserDisplayModel User
+        private UserInfo userInfo;
+        public UserInfo UserInfo
         {
-            get => user;
+            get => userInfo;
             set
             {
-                if (value == user)
+                if (value == userInfo)
                     return;
-                user = value;
+                userInfo = value;
+                UserDisplayModel = value.ConvertToDisplayModel();
+                OnPropertyChanged();
+            }
+        }
+
+        private UserDisplayModel userDisplayModel;
+        public UserDisplayModel UserDisplayModel
+        {
+            get => userDisplayModel;
+            set
+            {
+                if (value == userDisplayModel)
+                    return;
+                userDisplayModel = value;
                 OnPropertyChanged();
             }
         }
@@ -104,22 +145,23 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private StatisticsTimeSpan currentTimeSpan;
+        public ICommand UpdateStatistics { get; }
         public string DayBtnColor => currentTimeSpan == StatisticsTimeSpan.Day ? "#E7D8FF" : "Transparent";
         public string WeekBtnColor => currentTimeSpan == StatisticsTimeSpan.Week ? "#E7D8FF" : "Transparent";
         public string MonthBtnColor => currentTimeSpan == StatisticsTimeSpan.Month ? "#E7D8FF" : "Transparent";
+        private StatisticsTimeSpan currentTimeSpan;
 
         public ProfileViewModel()
         {
-            StatisticsDisplayModels = StatisticsService.GetStatistics(StatisticsTimeSpan.Day).ConvertToStatisticsDisplayModels();
-            AchievementDisplayModels = AchievementsService.GetAchievements().Select(am => am.ConvertToDisplayModel());
-            User = UserInfoService.GetUserInfo().ConvertToDisplayModel();
+            StatisticsModel = StatisticsService.GetStatistics(StatisticsTimeSpan.Day).Result;
+            AchievementModels = AchievementsService.GetAchievements().Result;
+            UserInfo = UserInfoService.GetUserInfo().Result;
             UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
         }
 
         private void OnUpdateStatistics(StatisticsTimeSpan timeSpan)
         {
-            StatisticsDisplayModels = StatisticsService.GetStatistics(timeSpan).ConvertToStatisticsDisplayModels();
+            StatisticsModel = StatisticsService.GetStatistics(timeSpan).Result;
             currentTimeSpan = timeSpan;
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));

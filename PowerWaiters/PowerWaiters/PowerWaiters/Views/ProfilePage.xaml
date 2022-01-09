@@ -22,15 +22,15 @@
                         <ColumnDefinition Width="110" />
                     </Grid.ColumnDefinitions>
                     <StackLayout Grid.Column="0" Padding="0" Spacing="0">
-                        <Label Text="{Binding User.FullName}" FontSize="24" TextColor="Black" Margin="0,0,0,10"/>
-                        <Label Text="{Binding User.Post}" FontSize="16" TextColor="#A0000000"/>
-                        <Label Text="{Binding User.EmploymentDateString}" FontSize="16" TextColor="#A0000000"/>
+                        <Label Text="{Binding UserDisplayModel.FullName}" FontSize="24" TextColor="Black" Margin="0,0,0,10"/>
+                        <Label Text="{Binding UserDisplayModel.Post}" FontSize="16" TextColor="#A0000000"/>
+                        <Label Text="{Binding UserDisplayModel.EmploymentDateString}" FontSize="16" TextColor="#A0000000"/>
                         <StackLayout Padding="0" Spacing="5" Margin="0" Orientation="Horizontal">
                             <Label TextColor="Black" FontSize="17">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Общий рейтинг: "/>
-                                        <Span Text="{Binding User.TotalScoresString}" TextColor="#6000FF"/>
+                                        <Span Text="{Binding UserDisplayModel.TotalScoresString}" TextColor="#6000FF"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -54,7 +54,7 @@
                                     <yummy:GradientStop Color="#D25A6B" Offset="1"/>
                                 </yummy:GradientStopCollection>
                             </yummy:PancakeView.BackgroundGradientStops>
-                            <Label Text="{Binding User.FirstSymbol}" TextColor="White" FontSize="50" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,4"/>
+                            <Label Text="{Binding UserDisplayModel.FirstSymbol}" TextColor="White" FontSize="50" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,4"/>
                         </yummy:PancakeView>
                     </Grid>
                 </Grid>

@@ -10,7 +10,18 @@ namespace PowerWaiters.ViewModels
 {
     class MainViewModel : BindableObject
     {
-        public RestourantInfo RestourantInfo { get; }
+        private RestourantInfo restourantInfo;
+        public RestourantInfo RestourantInfo { 
+            get => restourantInfo; 
+            set
+            {
+                if (value == restourantInfo)
+                    return;
+                restourantInfo = value;
+                RestourantStats = value.RestourantStatsModels.Select(x => x.ConvertToDisplayModel());
+                OnPropertyChanged();
+            }
+        }
         private IEnumerable<RestourantStatsDisplayModel> restourantStats;
         public IEnumerable<RestourantStatsDisplayModel> RestourantStats
         {
@@ -21,6 +32,20 @@ namespace PowerWaiters.ViewModels
                     return;
                 restourantStats = value;
                 UpdateRestourantStatsHeight();
+                OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<WaiterInfo> waiterInfos;
+        public IEnumerable<WaiterInfo> WaiterInfos
+        {
+            get => waiterInfos;
+            set
+            {
+                if (value == waiterInfos)
+                    return;
+                waiterInfos = value;
+                LeaderboardItems = ConvertToLeaderboardItems(value);
                 OnPropertyChanged();
             }
         }
@@ -99,25 +124,18 @@ namespace PowerWaiters.ViewModels
 
         public MainViewModel()
         {
-            LeaderboardItems = GetLeaderboardItems(StatisticsTimeSpan.Day);
-            RestourantInfo = RestourantInfoService.GetRestourantStats();
-            RestourantStats = RestourantInfo.RestourantStatsModels.Select(x => x.ConvertToDisplayModel());
+            WaiterInfos = WaiterInfoService.GetWaiters(currentTimeSpan).Result;
+            RestourantInfo = RestourantInfoService.GetRestourantStats().Result;
             UpdateLeaderboard = new Command<StatisticsTimeSpan>(OnUpdateLeaderboard);
         }
 
         private void OnUpdateLeaderboard(StatisticsTimeSpan timeSpan)
         {
-            LeaderboardItems = GetLeaderboardItems(timeSpan);
+            WaiterInfos = WaiterInfoService.GetWaiters(currentTimeSpan).Result;
             currentTimeSpan = timeSpan;
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));
             OnPropertyChanged(nameof(MonthBtnColor));
-        }
-
-        private IEnumerable<LeaderboardItem> GetLeaderboardItems(StatisticsTimeSpan timeSpan)
-        {
-            var waiters = WaiterInfoService.GetWaiters(timeSpan);
-            return ConvertToLeaderboardItems(waiters);
         }
 
         private IEnumerable<LeaderboardItem> ConvertToLeaderboardItems(IEnumerable<WaiterInfo> waiters)
