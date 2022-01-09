@@ -1,18 +1,41 @@
 ﻿using PowerWaiters.Models;
+using PowerWaiters.Helpers;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PowerWaiters.Services
 {
     static class WaiterInfoService
     {
-        public static IEnumerable<WaiterInfo> GetWaiters(StatisticsTimeSpan timeSpan)
+        public static async Task<IEnumerable<WaiterInfo>> GetWaiters(StatisticsTimeSpan timeSpan)
+        {
+            HttpResponseMessage response;
+            using (var client = Client.HttpClient)
+            {
+                try
+                {
+                    response = await client.GetAsync(RequestUrl(timeSpan));
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            return await JsonDeserializeHelper.TryDeserialise(response, FormatErrorData(timeSpan));
+        }
+
+        private static string RequestUrl(StatisticsTimeSpan timeSpan) =>
+            $"{Client.BaseServerAddress}/waiters/filter?{TimeSpanToFilterConverter.Convert(timeSpan)}";
+
+        private static List<WaiterInfo> FormatErrorData(StatisticsTimeSpan timeSpan)
         {
             return new List<WaiterInfo>
             {
                 new WaiterInfo
                 {
-                    FirstName = "Игорь",
-                    LastName = "Замощанский",
+                    FirstName = "ОШИБКА",
+                    LastName = "ФОРМАТА",
                     IsCurrentUser = false,
                     Scores = 112 + ((int)timeSpan)
                 },

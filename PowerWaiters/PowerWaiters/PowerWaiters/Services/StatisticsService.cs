@@ -1,10 +1,33 @@
 ﻿using PowerWaiters.Models;
+using PowerWaiters.Helpers;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PowerWaiters.Services
 {
     static class StatisticsService
     {
-        static public StatisticsModel GetStatistics(StatisticsTimeSpan timeSpan)
+        static public async Task<StatisticsModel> GetStatistics(StatisticsTimeSpan timeSpan)
+        {
+            HttpResponseMessage response;
+            using (var client = Client.HttpClient)
+            {
+                try
+                {
+                    response = await client.GetAsync(RequestUrl(2, timeSpan));
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            return await JsonDeserializeHelper.TryDeserialise(response, FormatErrorData(timeSpan));
+        }
+
+        private static string RequestUrl(int userId, StatisticsTimeSpan timeSpan) => 
+            $"{Client.BaseServerAddress}/waiters/{userId}/statistics{TimeSpanToFilterConverter.Convert(timeSpan)}";
+
+        private static StatisticsModel FormatErrorData(StatisticsTimeSpan timeSpan)
         {
             switch (timeSpan)
             {

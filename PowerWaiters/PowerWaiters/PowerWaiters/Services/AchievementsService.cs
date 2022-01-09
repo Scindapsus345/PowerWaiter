@@ -1,16 +1,17 @@
-﻿using PowerWaiters.Models;
+﻿using PowerWaiters.Helpers;
+using PowerWaiters.Models;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PowerWaiters.Services
 {
     static class AchievementsService
     {
-        static public IEnumerable<AchievementModel> GetAchievements()
-        {
-            return new List<AchievementModel>
+        private static List<AchievementModel> formatErrorData = new List<AchievementModel>
             {
                 new AchievementModel{
-                    Name = "Трудоголик",
+                    Name = "ОШИБКА ФОРМАТА",
                     Description = "Выполнить 100 заказов",
                     IconUrl = "https://imgcdn.wangyeyixia.com/aHR0cDovL3BuZ2ltZy5jb20vdXBsb2Fkcy9jcm93bi9jcm93bl9QTkcyMzg2OC5wbmc%3D.png?w=400",
                     Prize = 400,
@@ -48,6 +49,24 @@ namespace PowerWaiters.Services
                     Level = 2
                 }
             };
+
+        static public async Task<IEnumerable<AchievementModel>> GetAchievements()
+        {
+            HttpResponseMessage response;
+            using (var client = Client.HttpClient)
+            {
+                try
+                {
+                    response = await client.GetAsync(RequestUrl(2));
+                }
+                catch
+                {
+                    return new List<AchievementModel>();
+                }
+            }
+            return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
         }
+
+        private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/allAchievements";
     }
 }

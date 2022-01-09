@@ -1,16 +1,17 @@
 ﻿using PowerWaiters.Models;
+using PowerWaiters.Helpers;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace PowerWaiters.Services
 {
     static class RestourantInfoService
     {
-        public static RestourantInfo GetRestourantStats()
+        private static RestourantInfo formatErrorData = new RestourantInfo
         {
-            return new RestourantInfo
-            {
-                Name = "Italian Pizza",
-                RestourantStatsModels = new List<RestourantStatsModel>
+            Name = "ОШИБКА ФОРМАТА",
+            RestourantStatsModels = new List<RestourantStatsModel>
                 {
                     new RestourantStatsModel
                     {
@@ -34,7 +35,25 @@ namespace PowerWaiters.Services
                         Deadline = "12.05.2023"
                     }
                 }
-            };
+        };
+
+        public static async Task<RestourantInfo> GetRestourantStats()
+        {
+            HttpResponseMessage response;
+            using (var client = Client.HttpClient)
+            {
+                try
+                {
+                    response = await client.GetAsync(RequestUrl(2));
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
         }
+
+        private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/restourant";
     }
 }
