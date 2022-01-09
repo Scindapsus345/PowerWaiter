@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using PowerWaiters.Models;
+﻿using PowerWaiters.Models;
 using PowerWaiters.Helpers;
 using System.Collections.Generic;
 using System.Net.Http;

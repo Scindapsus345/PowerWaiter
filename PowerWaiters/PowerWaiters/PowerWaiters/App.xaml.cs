@@ -1,4 +1,5 @@
 ﻿using PowerWaiters.Views;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace PowerWaiters
@@ -10,6 +11,7 @@ namespace PowerWaiters
             InitializeComponent();
 
             MainPage = new MainTabbedPage();
+            DataRefresher.StartPolling();
         }
 
         protected override void OnStart()

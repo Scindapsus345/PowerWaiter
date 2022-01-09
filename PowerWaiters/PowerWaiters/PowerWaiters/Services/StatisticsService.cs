@@ -2,12 +2,22 @@
 using PowerWaiters.Helpers;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace PowerWaiters.Services
 {
     static class StatisticsService
     {
-        static public async Task<StatisticsModel> GetStatistics(StatisticsTimeSpan timeSpan)
+        static public async Task<Dictionary<StatisticsTimeSpan, StatisticsModel>> GetStatistics()
+        {
+            var statisticsModelsByFilter = new Dictionary<StatisticsTimeSpan, StatisticsModel>();
+            statisticsModelsByFilter[StatisticsTimeSpan.Day] = await GetStatistics(StatisticsTimeSpan.Day);
+            statisticsModelsByFilter[StatisticsTimeSpan.Week] = await GetStatistics(StatisticsTimeSpan.Week);
+            statisticsModelsByFilter[StatisticsTimeSpan.Month] = await GetStatistics(StatisticsTimeSpan.Month);
+            return statisticsModelsByFilter;
+        }
+
+        static private async Task<StatisticsModel> GetStatistics(StatisticsTimeSpan timeSpan)
         {
             HttpResponseMessage response;
             using (var client = Client.HttpClient)

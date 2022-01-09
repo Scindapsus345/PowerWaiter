@@ -8,7 +8,16 @@ namespace PowerWaiters.Services
 {
     static class WaiterInfoService
     {
-        public static async Task<IEnumerable<WaiterInfo>> GetWaiters(StatisticsTimeSpan timeSpan)
+        public static async Task<Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>>> GetWaiters()
+        {
+            var waiterInfoByFilter = new Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>>();
+            waiterInfoByFilter[StatisticsTimeSpan.Day] = await GetWaiters(StatisticsTimeSpan.Day);
+            waiterInfoByFilter[StatisticsTimeSpan.Week] = await GetWaiters(StatisticsTimeSpan.Week);
+            waiterInfoByFilter[StatisticsTimeSpan.Month] = await GetWaiters(StatisticsTimeSpan.Month);
+            return waiterInfoByFilter;
+        }
+
+        private static async Task<IEnumerable<WaiterInfo>> GetWaiters(StatisticsTimeSpan timeSpan)
         {
             HttpResponseMessage response;
             using (var client = Client.HttpClient)

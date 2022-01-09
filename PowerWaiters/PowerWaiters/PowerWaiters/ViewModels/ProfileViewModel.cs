@@ -10,16 +10,16 @@ namespace PowerWaiters.ViewModels
 {
     class ProfileViewModel : BindableObject
     {
-        private StatisticsModel statisticsModel;
-        public StatisticsModel StatisticsModel
+        private Dictionary<StatisticsTimeSpan, StatisticsModel> statisticsModelByFilter;
+        public Dictionary<StatisticsTimeSpan, StatisticsModel> StatisticsModelByFilter
         {
-            get => statisticsModel;
+            get => statisticsModelByFilter;
             set
             {
-                if (value == statisticsModel)
+                if (value == statisticsModelByFilter)
                     return;
-                statisticsModel = value;
-                StatisticsDisplayModels = value.ConvertToStatisticsDisplayModels();
+                statisticsModelByFilter = value;
+                StatisticsDisplayModels = value[currentTimeSpan].ConvertToStatisticsDisplayModels();
                 OnPropertyChanged();
             }
         }
@@ -153,16 +153,16 @@ namespace PowerWaiters.ViewModels
 
         public ProfileViewModel()
         {
-            StatisticsModel = StatisticsService.GetStatistics(StatisticsTimeSpan.Day).Result;
-            AchievementModels = AchievementsService.GetAchievements().Result;
-            UserInfo = UserInfoService.GetUserInfo().Result;
+            StatisticsModelByFilter = DataRefresher.StatisticsModelByFilter;
+            AchievementModels = DataRefresher.AchievementModels;
+            UserInfo = DataRefresher.UserInfo;
             UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
         }
 
         private void OnUpdateStatistics(StatisticsTimeSpan timeSpan)
         {
-            StatisticsModel = StatisticsService.GetStatistics(timeSpan).Result;
             currentTimeSpan = timeSpan;
+            StatisticsDisplayModels = StatisticsModelByFilter[timeSpan].ConvertToStatisticsDisplayModels();
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));
             OnPropertyChanged(nameof(MonthBtnColor));

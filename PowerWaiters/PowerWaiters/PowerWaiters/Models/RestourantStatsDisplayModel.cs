@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PowerWaiters.Models
+﻿namespace PowerWaiters.Models
 {
     class RestourantStatsDisplayModel
     {

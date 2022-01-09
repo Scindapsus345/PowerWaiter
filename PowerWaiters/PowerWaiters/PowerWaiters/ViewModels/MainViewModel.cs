@@ -22,6 +22,7 @@ namespace PowerWaiters.ViewModels
                 OnPropertyChanged();
             }
         }
+        
         private IEnumerable<RestourantStatsDisplayModel> restourantStats;
         public IEnumerable<RestourantStatsDisplayModel> RestourantStats
         {
@@ -36,16 +37,16 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private IEnumerable<WaiterInfo> waiterInfos;
-        public IEnumerable<WaiterInfo> WaiterInfos
+        private Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>> waiterInfosByFilter;
+        public Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>> WaiterInfosByFilter
         {
-            get => waiterInfos;
+            get => waiterInfosByFilter;
             set
             {
-                if (value == waiterInfos)
+                if (value == waiterInfosByFilter)
                     return;
-                waiterInfos = value;
-                LeaderboardItems = ConvertToLeaderboardItems(value);
+                waiterInfosByFilter = value;
+                LeaderboardItems = ConvertToLeaderboardItems(value[currentTimeSpan]);
                 OnPropertyChanged();
             }
         }
@@ -124,14 +125,14 @@ namespace PowerWaiters.ViewModels
 
         public MainViewModel()
         {
-            WaiterInfos = WaiterInfoService.GetWaiters(currentTimeSpan).Result;
-            RestourantInfo = RestourantInfoService.GetRestourantStats().Result;
+            WaiterInfosByFilter = DataRefresher.WaiterInfosByFilter;
+            RestourantInfo = DataRefresher.RestourantInfo;
             UpdateLeaderboard = new Command<StatisticsTimeSpan>(OnUpdateLeaderboard);
         }
 
         private void OnUpdateLeaderboard(StatisticsTimeSpan timeSpan)
         {
-            WaiterInfos = WaiterInfoService.GetWaiters(currentTimeSpan).Result;
+            LeaderboardItems = ConvertToLeaderboardItems(WaiterInfosByFilter[timeSpan]);
             currentTimeSpan = timeSpan;
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));
