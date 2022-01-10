@@ -3,6 +3,7 @@ using PowerWaiters.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace PowerWaiters.Services
 {
@@ -50,19 +51,15 @@ namespace PowerWaiters.Services
                 }
             };
 
-        static public async Task<IEnumerable<AchievementModel>> GetAchievements()
+        public static async Task<IEnumerable<AchievementModel>> GetAchievements()
         {
+            return formatErrorData;
             HttpResponseMessage response;
             using (var client = Client.HttpClient)
             {
-                try
-                {
-                    response = await client.GetAsync(RequestUrl(2));
-                }
-                catch
-                {
+                response = await client.GetAsync(RequestUrl(2));
+                if (!response.IsSuccessStatusCode)
                     return new List<AchievementModel>();
-                }
             }
             return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
         }

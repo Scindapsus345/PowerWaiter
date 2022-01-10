@@ -17,8 +17,9 @@ namespace PowerWaiters.Services
             return statisticsModelsByFilter;
         }
 
-        static private async Task<StatisticsModel> GetStatistics(StatisticsTimeSpan timeSpan)
+        private static async Task<StatisticsModel> GetStatistics(StatisticsTimeSpan timeSpan)
         {
+            return FormatErrorData(timeSpan);
             HttpResponseMessage response;
             using (var client = Client.HttpClient)
             {

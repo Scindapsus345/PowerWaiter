@@ -153,9 +153,7 @@ namespace PowerWaiters.ViewModels
 
         public ProfileViewModel()
         {
-            StatisticsModelByFilter = DataRefresher.StatisticsModelByFilter;
-            AchievementModels = DataRefresher.AchievementModels;
-            UserInfo = DataRefresher.UserInfo;
+            DataRefresher.PersonalDataChanged += OnPersonalDataChanged;
             UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
         }
 
@@ -172,6 +170,13 @@ namespace PowerWaiters.ViewModels
         {
             var count = StatisticsDisplayModels.Count();
             StatisticsHeight = ((count / 2) + (count % 2)) * StatsBlockHeight;
+        }
+
+        private void OnPersonalDataChanged()
+        {
+            StatisticsModelByFilter = DataRefresher.StatisticsModelByFilter;
+            AchievementModels = DataRefresher.AchievementModels;
+            UserInfo = DataRefresher.UserInfo;
         }
 
         private void UpdateAchievementsHeight() => AchievementsHeight = AchievementDisplayModels.Count() * AchievementBlockHeight;

@@ -125,9 +125,21 @@ namespace PowerWaiters.ViewModels
 
         public MainViewModel()
         {
-            WaiterInfosByFilter = DataRefresher.WaiterInfosByFilter;
-            RestourantInfo = DataRefresher.RestourantInfo;
+            DataRefresher.LeaderboardDataChanged += OnLeaderboardDataChanged;
+            DataRefresher.RestourantDataChanged += OnRestaurantDataChanged;
             UpdateLeaderboard = new Command<StatisticsTimeSpan>(OnUpdateLeaderboard);
+        }
+
+        private void OnRestaurantDataChanged()
+        {
+            RestourantInfo = DataRefresher.RestourantInfo;
+            OnPropertyChanged(nameof(RestourantInfo));
+        }
+
+        private void OnLeaderboardDataChanged()
+        {
+            WaiterInfosByFilter = DataRefresher.WaiterInfosByFilter;
+            OnPropertyChanged(nameof(WaiterInfosByFilter));
         }
 
         private void OnUpdateLeaderboard(StatisticsTimeSpan timeSpan)

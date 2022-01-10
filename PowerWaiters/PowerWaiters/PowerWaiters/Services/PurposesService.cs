@@ -30,6 +30,7 @@ namespace PowerWaiters.Services
 
         public static async Task<IEnumerable<PurposeModel>> GetPurposes()
         {
+            return formatErrorData;
             HttpResponseMessage response;
             using (var client = Client.HttpClient)
             {

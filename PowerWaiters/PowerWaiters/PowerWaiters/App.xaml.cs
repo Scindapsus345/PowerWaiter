@@ -11,7 +11,8 @@ namespace PowerWaiters
             InitializeComponent();
 
             MainPage = new MainTabbedPage();
-            DataRefresher.StartPolling();
+            DataRefresher.InitialGetAllData();
+            Task.Run(DataRefresher.StartPolling);
         }
 
         protected override void OnStart()

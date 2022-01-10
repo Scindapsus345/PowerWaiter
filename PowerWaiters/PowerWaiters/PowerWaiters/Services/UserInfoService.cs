@@ -18,6 +18,7 @@ namespace PowerWaiters.Services
 
         public static async Task<UserInfo> GetUserInfo()
         {
+            return formatErrorData;
             HttpResponseMessage response;
             using (var client = Client.HttpClient)
             {

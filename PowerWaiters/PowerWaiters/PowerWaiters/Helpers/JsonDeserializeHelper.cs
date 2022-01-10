@@ -8,6 +8,7 @@ namespace PowerWaiters.Helpers
     {
         public static async Task<T> TryDeserialise<T>(HttpResponseMessage response, T formatErrorData)
         {
+            return formatErrorData;
             var responseString = await response.Content.ReadAsStringAsync();
             try
             {

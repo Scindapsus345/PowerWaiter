@@ -19,6 +19,7 @@ namespace PowerWaiters.Services
 
         private static async Task<IEnumerable<WaiterInfo>> GetWaiters(StatisticsTimeSpan timeSpan)
         {
+            return FormatErrorData(timeSpan);
             HttpResponseMessage response;
             using (var client = Client.HttpClient)
             {

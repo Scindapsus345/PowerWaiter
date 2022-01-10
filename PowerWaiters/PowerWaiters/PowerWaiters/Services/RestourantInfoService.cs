@@ -39,6 +39,7 @@ namespace PowerWaiters.Services
 
         public static async Task<RestourantInfo> GetRestourantStats()
         {
+            return formatErrorData;
             HttpResponseMessage response;
             using (var client = Client.HttpClient)
             {

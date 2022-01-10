@@ -11,6 +11,12 @@ namespace PowerWaiters.Services
     {
         public static async Task<RefreshStatus> GetRefreshStatus(LastUpdateDates lastUpdateDates)
         {
+            return new RefreshStatus
+            {
+                Leaderboard = true,
+                Personal = true,
+                Restourant = true
+            };
             HttpResponseMessage response;
             var json = JsonConvert.SerializeObject(lastUpdateDates);
             var data = new StringContent(json, Encoding.UTF8, "application/json");

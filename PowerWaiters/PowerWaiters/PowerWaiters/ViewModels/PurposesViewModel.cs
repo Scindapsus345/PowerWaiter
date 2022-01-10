@@ -64,7 +64,7 @@ namespace PowerWaiters.ViewModels
 
         public PurposesViewModel()
         {
-            PurposeModels = DataRefresher.PurposeModels;
+            DataRefresher.PersonalDataChanged += () => PurposeModels = DataRefresher.PurposeModels;
         }
 
         private void UpdatePurposesHeight() => PurposesHeight = PurposeModels.Count() * PurposeBlockHeight;
