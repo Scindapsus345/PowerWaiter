@@ -5,7 +5,8 @@
              xmlns:models="clr-namespace:PowerWaiters.Models" 
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
              xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
-             xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels">
+             xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels"
+             xmlns:elements="clr-namespace:PowerWaiters.Elements;assembly=PowerWaiters">
     <ContentPage.BindingContext>
         <viewmodels:MainViewModel/>
     </ContentPage.BindingContext>
@@ -29,14 +30,15 @@
                                         </Grid.ColumnDefinitions>
                                         <StackLayout Spacing="10" VerticalOptions="Center">
                                             <Label Text="{Binding Name}" FontSize="18" TextColor="Black" FontAttributes="Bold"/>
-                                            <Label>
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding ProgressString}" FontAttributes="Bold" TextColor="#6000FF" FontSize="22"/>
-                                                        <Span Text="{Binding PurposeString, StringFormat='/{0}'}" TextColor="#756000FF" FontSize="18"/>
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
+                                            <StackLayout Padding="0" Spacing="0" Margin="0" Orientation="Horizontal">
+                                                <elements:GradientLabel Text="{Binding ProgressString}" 
+                                                                     FontAttributes="Bold" 
+                                                                     TextColor1="#806000FF" 
+                                                                     TextColor2="#6000FF" 
+                                                                     TextColor="Black" 
+                                                                     FontSize="22"/>
+                                                <Label Text="{Binding PurposeString, StringFormat='/{0}'}" TextColor="#756000FF" FontSize="18" VerticalOptions="End"/>
+                                            </StackLayout>
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Text="{Binding Deadline}" FontSize="15" TextColor="#5B2B2B2B"/>
                                                 <Image Source="clock" HeightRequest="20" WidthRequest="20" Margin="0,0,15,0"/>

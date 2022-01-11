@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:PowerWaiters.ViewModels"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
+             xmlns:elements="clr-namespace:PowerWaiters.Elements;assembly=PowerWaiters"
              x:Class="PowerWaiters.Views.PurposesPage">
     <ContentPage.BindingContext>
         <viewmodels:PurposesViewModel/>
@@ -11,7 +12,7 @@
         <ScrollView>
             <StackLayout Padding="0, 20" >
                 <Label Text="Мои цели" Margin="20, 0" FontSize="30" TextColor="Black" FontAttributes="Bold"/>
-                <CollectionView ItemsSource="{Binding PurposeModels}" HeightRequest="{Binding PurposesHeight}">
+                <CollectionView ItemsSource="{Binding PurposeDisplayModels}" HeightRequest="{Binding PurposesHeight}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PurposesViewModel}}, Path=PurposeBlockHeight}">
@@ -26,14 +27,15 @@
                                         </Grid.ColumnDefinitions>
                                         <StackLayout Spacing="10" VerticalOptions="Center">
                                             <Label Text="{Binding Name}" FontSize="18" TextColor="Black" FontAttributes="Bold"/>
-                                            <Label>
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding ProgressString}" FontAttributes="Bold" TextColor="#6000FF" FontSize="22"/>
-                                                        <Span Text="{Binding PurposeString, StringFormat='/{0}'}" TextColor="#756000FF" FontSize="18"/>
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
+                                            <StackLayout Padding="0" Spacing="0" Margin="0" Orientation="Horizontal">
+                                                <elements:GradientLabel Text="{Binding ProgressString}" 
+                                                                        FontAttributes="Bold" 
+                                                                        TextColor1="#806000FF" 
+                                                                        TextColor2="#6000FF" 
+                                                                        TextColor="Black" 
+                                                                        FontSize="22"/>
+                                                <Label Text="{Binding PurposeString, StringFormat='/{0}'}" TextColor="#756000FF" FontSize="18" VerticalOptions="End"/>
+                                            </StackLayout>
                                             <StackLayout Orientation="Horizontal">
                                                 <Label Text="{Binding PrizeString}" FontSize="15" TextColor="#5B2B2B2B"/>
                                                 <Image Source="gray_cup" HeightRequest="20" WidthRequest="20" Margin="0,0,15,0"/>
