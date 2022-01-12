@@ -10,9 +10,9 @@ namespace PowerWaiters
         {
             InitializeComponent();
 
-            MainPage = new MainTabbedPage();
-            DataRefresher.InitialGetAllData();
-            Task.Run(DataRefresher.StartPolling);
+            MainPage = new LoginPage();
+            //DataRefresher.InitialGetAllData();
+            //Task.Run(DataRefresher.StartPolling);
         }
 
         protected override void OnStart()

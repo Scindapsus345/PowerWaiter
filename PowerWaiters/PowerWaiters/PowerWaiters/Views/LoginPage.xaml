@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerWaiters.Views.LoginPage"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:viewModels="clr-namespace:PowerWaiters.ViewModels;assembly=PowerWaiters"
+             Background="#FFFFFF">
+    <ContentPage.BindingContext>
+        <viewModels:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20" Spacing="0">
+            <Label Text="Добро пожаловать!" TextColor="Black" FontSize="26" Margin="0, 100, 0, 0"
+                   HorizontalOptions="CenterAndExpand"/>
+            <Image Source="logo.jpg" Margin="40, 20"/>
+            <Label Text="WaiterCode" FontSize="20" Margin="0,20,0,0"/>
+            <Entry FontSize="30" Text="{Binding WaiterCode, Mode=OneWayToSource}" Margin="0" TextTransform="Uppercase"/>
+            <Grid Padding="0" VerticalOptions="EndAndExpand" Margin="20">
+                <yummy:PancakeView BackgroundGradientStartPoint="0,0"
+                                   BackgroundGradientEndPoint="0,1"
+                                   Padding="0"
+                                   CornerRadius="15">
+                    <yummy:PancakeView.BackgroundGradientStops>
+                        <yummy:GradientStopCollection>
+                            <yummy:GradientStop Color="#806000FF" Offset="0" />
+                            <yummy:GradientStop Color="#6000FF" Offset="1" />
+                        </yummy:GradientStopCollection>
+                    </yummy:PancakeView.BackgroundGradientStops>
+                    <Button Text="Войти" FontSize="24" FontAttributes="Bold" VerticalOptions="FillAndExpand" Padding="10"
+                            TextColor="White" Command="{Binding LoginCommand}" BackgroundColor="Transparent"/>
+                </yummy:PancakeView>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
