@@ -1,8 +1,6 @@
 ﻿using PowerWaiters.Models;
 using PowerWaiters.Helpers;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace PowerWaiters.Services
 {
@@ -11,7 +9,7 @@ namespace PowerWaiters.Services
         private static RestourantInfo formatErrorData = new RestourantInfo
         {
             Name = "ОШИБКА ФОРМАТА",
-            RestourantStatsModels = new List<RestourantStatsModel>
+            Statistics = new List<RestourantStatsModel>
                 {
                     new RestourantStatsModel
                     {
@@ -37,24 +35,14 @@ namespace PowerWaiters.Services
                 }
         };
 
-        public static async Task<RestourantInfo> GetRestourantStats()
+        public static RestourantInfo GetRestourantStats()
         {
-            return formatErrorData;
-            HttpResponseMessage response;
-            using (var client = Client.HttpClient)
-            {
-                try
-                {
-                    response = await client.GetAsync(RequestUrl(2));
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
+            var response = Client.HttpClient.GetAsync(RequestUrl()).Result;
+            if (!response.IsSuccessStatusCode)
+                return null;
+            return JsonDeserializeHelper.TryDeserialise(response, formatErrorData).Result;
         }
 
-        private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/restourant";
+        private static string RequestUrl() => $"{Client.BaseServerAddress}/mission/all";
     }
 }

@@ -7,7 +7,7 @@ namespace PowerWaiters.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmploymentDate { get; set; }
-        public string Post { get; set; }
+        public string Position { get; set; }
         public int TotalScores { get; set; }
 
         public UserDisplayModel ConvertToDisplayModel() => new UserDisplayModel
@@ -16,7 +16,7 @@ namespace PowerWaiters.Models
             EmploymentDateString = $"Работает с {EmploymentDate}",
             TotalScoresString = TotalScores.ToXPString(),
             FirstSymbol = FirstName[0].ToString(),
-            Post = Post
+            Post = Position
         };
     }
 }

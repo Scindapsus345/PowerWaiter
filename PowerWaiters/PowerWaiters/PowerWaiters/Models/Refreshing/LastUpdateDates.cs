@@ -7,7 +7,7 @@ namespace PowerWaiters.Models
     class LastUpdateDates
     {
         public DateTime Personal { get; set; }
-        public DateTime Restourant { get; set; }
+        public DateTime Restaurant { get; set; }
         public DateTime Leaderboard { get; set; }
     }
 }

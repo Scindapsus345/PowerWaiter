@@ -18,7 +18,7 @@ namespace PowerWaiters.ViewModels
                 if (value == restourantInfo)
                     return;
                 restourantInfo = value;
-                RestourantStats = value.RestourantStatsModels.Select(x => x.ConvertToDisplayModel());
+                RestourantStats = value.Statistics.Select(x => x.ConvertToDisplayModel());
                 OnPropertyChanged();
             }
         }
@@ -159,11 +159,11 @@ namespace PowerWaiters.ViewModels
                 var waiter = orderedWaiters[i - 1];
                 yield return new LeaderboardItem
                 {
-                    IsCurrentUser = waiter.IsCurrentUser,
+                    IsCurrentUser = waiter.CurrentUser,
                     Name = waiter.FullName,
                     Number = i.ToString(),
                     ScoresString = waiter.Scores.ToXPString(),
-                    BackgroundColor = waiter.IsCurrentUser ? "#0C6000FF" : "Transparent",
+                    BackgroundColor = waiter.CurrentUser ? "#0C6000FF" : "Transparent",
                     CupName = GetCupNameNumber(i)
                 };
             }

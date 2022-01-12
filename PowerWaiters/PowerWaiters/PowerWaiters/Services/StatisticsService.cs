@@ -8,35 +8,26 @@ namespace PowerWaiters.Services
 {
     static class StatisticsService
     {
-        static public async Task<Dictionary<StatisticsTimeSpan, StatisticsModel>> GetStatistics()
+        static public Dictionary<StatisticsTimeSpan, StatisticsModel> GetStatistics()
         {
             var statisticsModelsByFilter = new Dictionary<StatisticsTimeSpan, StatisticsModel>();
-            statisticsModelsByFilter[StatisticsTimeSpan.Day] = await GetStatistics(StatisticsTimeSpan.Day);
-            statisticsModelsByFilter[StatisticsTimeSpan.Week] = await GetStatistics(StatisticsTimeSpan.Week);
-            statisticsModelsByFilter[StatisticsTimeSpan.Month] = await GetStatistics(StatisticsTimeSpan.Month);
+            statisticsModelsByFilter[StatisticsTimeSpan.Day] = GetStatistics(StatisticsTimeSpan.Day);
+            statisticsModelsByFilter[StatisticsTimeSpan.Week] = GetStatistics(StatisticsTimeSpan.Week);
+            statisticsModelsByFilter[StatisticsTimeSpan.Month] = GetStatistics(StatisticsTimeSpan.Month);
             return statisticsModelsByFilter;
         }
 
-        private static async Task<StatisticsModel> GetStatistics(StatisticsTimeSpan timeSpan)
+        private static StatisticsModel GetStatistics(StatisticsTimeSpan timeSpan)
         {
-            return FormatErrorData(timeSpan);
-            HttpResponseMessage response;
-            using (var client = Client.HttpClient)
-            {
-                try
-                {
-                    response = await client.GetAsync(RequestUrl(2, timeSpan));
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            return await JsonDeserializeHelper.TryDeserialise(response, FormatErrorData(timeSpan));
+
+            var response = Client.HttpClient.GetAsync(RequestUrl(Client.UserId, timeSpan)).Result;
+            if (!response.IsSuccessStatusCode)
+                return null;
+            return JsonDeserializeHelper.TryDeserialise(response, FormatErrorData(timeSpan)).Result;
         }
 
         private static string RequestUrl(int userId, StatisticsTimeSpan timeSpan) => 
-            $"{Client.BaseServerAddress}/waiters/{userId}/statistics{TimeSpanToFilterConverter.Convert(timeSpan)}";
+            $"{Client.BaseServerAddress}/waiters/{userId}/statistics?{TimeSpanToFilterConverter.Convert(timeSpan)}";
 
         private static StatisticsModel FormatErrorData(StatisticsTimeSpan timeSpan)
         {
@@ -46,28 +37,28 @@ namespace PowerWaiters.Services
                     return new StatisticsModel
                     {
                         Rating = 200,
-                        DailyRevenue = 100,
-                        DishesByGoList = 50,
-                        OrdersClosed = 20,
-                        DigitizedGuests = 10
+                        Revenue = 100,
+                        GoList = 50,
+                        Orders = 20,
+                        Checkins = 10
                     };
                 case StatisticsTimeSpan.Week:
                     return new StatisticsModel
                     {
                         Rating = 500,
-                        DailyRevenue = 200,
-                        DishesByGoList = 150,
-                        OrdersClosed = 50,
-                        DigitizedGuests = 12
+                        Revenue = 200,
+                        GoList = 150,
+                        Orders = 50,
+                        Checkins = 12
                     };
                 case StatisticsTimeSpan.Month:
                     return new StatisticsModel
                     {
                         Rating = 1800,
-                        DailyRevenue = 920,
-                        DishesByGoList = 340,
-                        OrdersClosed = 102,
-                        DigitizedGuests = 36
+                        Revenue = 920,
+                        GoList = 340,
+                        Orders = 102,
+                        Checkins = 36
                     };
                 default:
                     return new StatisticsModel();

@@ -1,15 +1,12 @@
 ﻿using PowerWaiters.Models;
 using PowerWaiters.Helpers;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace PowerWaiters.Services
 {
     static class PurposesService
     {
-        private static List<PurposeModel> formatErrorData = new List<PurposeModel>
-        {
+        private static PurposeModel[] formatErrorData =  {
             new PurposeModel
             {
                 Name = "ОШИБКА ФОРМАТА",
@@ -28,22 +25,13 @@ namespace PowerWaiters.Services
             }
         };
 
-        public static async Task<IEnumerable<PurposeModel>> GetPurposes()
+        public static IEnumerable<PurposeModel> GetPurposes()
         {
-            return formatErrorData;
-            HttpResponseMessage response;
-            using (var client = Client.HttpClient)
-            {
-                try
-                {
-                    response = await client.GetAsync(RequestUrl(2));
-                }
-                catch
-                {
-                    return new List<PurposeModel>();
-                }
-            }
-            return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
+
+            var response = Client.HttpClient.GetAsync(RequestUrl(Client.UserId)).Result;
+            if (!response.IsSuccessStatusCode)
+                return new List<PurposeModel>();
+            return JsonDeserializeHelper.TryDeserialise(response, formatErrorData).Result;
         }
 
         private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/allMissions";

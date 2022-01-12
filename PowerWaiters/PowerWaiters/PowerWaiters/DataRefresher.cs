@@ -23,54 +23,59 @@ namespace PowerWaiters
         public static event Action RestourantDataChanged;
         public static event Action LeaderboardDataChanged;
 
-        public static async Task StartPolling()
+        public static Task StartPolling()
         {
             while (true)
             {
                 Thread.Sleep(5000);
-                var refreshStatus = await RefreshService.GetRefreshStatus(LastUpdateDates);
-                await TryRefreshData(refreshStatus);
+                var refreshStatus = RefreshService.GetRefreshStatus(LastUpdateDates);
+                TryRefreshData(refreshStatus);
             }
         }
 
-        public static async Task InitialGetAllData()
+        public static void InitialGetAllData()
         {
-            LastUpdateDates = new LastUpdateDates();
-            await RefreshPersonalData();
-            await RefreshRestaurantData();
-            await RefreshLeaderboardData();
+            LastUpdateDates = new LastUpdateDates()
+            {
+                Personal = DateTime.Now,
+                Leaderboard = DateTime.Now,
+                Restaurant = DateTime.Now
+            };
+            RefreshPersonalData();
+            RefreshRestaurantData();
+            RefreshLeaderboardData();
         }
 
-        private static async Task TryRefreshData(RefreshStatus refreshStatus)
+        private static void TryRefreshData(RefreshStatus refreshStatus)
         {
             if (refreshStatus.Personal)
-                await RefreshPersonalData();
+                RefreshPersonalData();
             if (refreshStatus.Restourant)
-                await RefreshRestaurantData();
+                RefreshRestaurantData();
             if (refreshStatus.Leaderboard)
-                await RefreshLeaderboardData();
+                RefreshLeaderboardData();
         }
 
-        private static async Task RefreshPersonalData()
+        private static void RefreshPersonalData()
         {
-            AchievementModels = await AchievementsService.GetAchievements().ConfigureAwait(false);
-            UserInfo = await UserInfoService.GetUserInfo().ConfigureAwait(false);
-            StatisticsModelByFilter = await StatisticsService.GetStatistics().ConfigureAwait(false);
-            PurposeModels = await PurposesService.GetPurposes().ConfigureAwait(false);
+            AchievementModels = AchievementsService.GetAchievements();
+            UserInfo = UserInfoService.GetUserInfo();
+            StatisticsModelByFilter = StatisticsService.GetStatistics();
+            PurposeModels = PurposesService.GetPurposes();
             LastUpdateDates.Personal = DateTime.Now;
             PersonalDataChanged.Invoke();
         }
 
-        private static async Task RefreshRestaurantData()
+        private static void RefreshRestaurantData()
         {
-            RestourantInfo = await RestourantInfoService.GetRestourantStats();
-            LastUpdateDates.Restourant = DateTime.Now;
+            RestourantInfo = RestourantInfoService.GetRestourantStats();
+            LastUpdateDates.Restaurant = DateTime.Now;
             RestourantDataChanged.Invoke();
         }
 
-        private static async Task RefreshLeaderboardData()
+        private static void RefreshLeaderboardData()
         {
-            WaiterInfosByFilter = await WaiterInfoService.GetWaiters();
+            WaiterInfosByFilter = WaiterInfoService.GetWaiters();
             LastUpdateDates.Leaderboard = DateTime.Now;
             LeaderboardDataChanged.Invoke();
         }

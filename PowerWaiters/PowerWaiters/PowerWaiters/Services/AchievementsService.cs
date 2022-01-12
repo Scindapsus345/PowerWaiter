@@ -1,9 +1,6 @@
 ﻿using PowerWaiters.Helpers;
 using PowerWaiters.Models;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace PowerWaiters.Services
 {
@@ -51,17 +48,13 @@ namespace PowerWaiters.Services
                 }
             };
 
-        public static async Task<IEnumerable<AchievementModel>> GetAchievements()
+        public static IEnumerable<AchievementModel> GetAchievements()
         {
-            return formatErrorData;
-            HttpResponseMessage response;
-            using (var client = Client.HttpClient)
-            {
-                response = await client.GetAsync(RequestUrl(2));
+
+            var response = Client.HttpClient.GetAsync(RequestUrl(Client.UserId)).Result;
                 if (!response.IsSuccessStatusCode)
                     return new List<AchievementModel>();
-            }
-            return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
+            return JsonDeserializeHelper.TryDeserialise(response, formatErrorData).Result;
         }
 
         private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/allAchievements";

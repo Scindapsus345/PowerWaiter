@@ -11,29 +11,19 @@ namespace PowerWaiters.Services
         {
             FirstName = "Игорь",
             LastName = "Голдберг",
-            Post = "Официант",
+            Position = "Официант",
             TotalScores = 3672,
             EmploymentDate = "27.02.2001"
         };
 
-        public static async Task<UserInfo> GetUserInfo()
+        public static UserInfo GetUserInfo()
         {
-            return formatErrorData;
-            HttpResponseMessage response;
-            using (var client = Client.HttpClient)
-            {
-                try
-                {
-                    response = await client.GetAsync(RequestUrl(2));
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            return await JsonDeserializeHelper.TryDeserialise(response, formatErrorData);
+            var response = Client.HttpClient.GetAsync(RequestUrl(Client.UserId)).Result;
+            if (!response.IsSuccessStatusCode)
+                return null; 
+            return JsonDeserializeHelper.TryDeserialise(response, formatErrorData).Result;
         }
 
-        private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/info";
+        private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}";
     }
 }
