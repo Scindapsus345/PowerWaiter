@@ -13,21 +13,22 @@ namespace PowerWaiters
     {
         public static IEnumerable<AchievementModel> AchievementModels { get; private set; }
         public static UserInfo UserInfo { get; private set; }
-        public static Dictionary<StatisticsTimeSpan, StatisticsModel> StatisticsModelByFilter { get; private set; }
+        public static Dictionary<StatisticsType, StatisticsModel> StatisticsModelByFilter { get; private set; }
         public static RestourantInfo RestourantInfo { get; private set; }
-        public static Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>> WaiterInfosByFilter { get; private set; }
+        public static Dictionary<StatisticsType, IEnumerable<WaiterInfo>> WaiterInfosByFilter { get; private set; }
         public static IEnumerable<PurposeModel> PurposeModels { get; private set; }
         private static LastUpdateDates LastUpdateDates { get; set; }
 
         public static event Action PersonalDataChanged;
         public static event Action RestourantDataChanged;
         public static event Action LeaderboardDataChanged;
+        public static event Action MissionsDataChanged;
 
         public static Task StartPolling()
         {
             while (true)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(30000);
                 var refreshStatus = RefreshService.GetRefreshStatus(LastUpdateDates);
                 TryRefreshData(refreshStatus);
             }
@@ -39,21 +40,27 @@ namespace PowerWaiters
             {
                 Personal = DateTime.Now,
                 Leaderboard = DateTime.Now,
-                Restaurant = DateTime.Now
+                Restaurant = DateTime.Now,
+                Missions = DateTime.Now
             };
             RefreshPersonalData();
             RefreshRestaurantData();
             RefreshLeaderboardData();
+            RefreshMissionsData();
         }
 
         private static void TryRefreshData(RefreshStatus refreshStatus)
         {
+            if (refreshStatus == null)
+                return;
             if (refreshStatus.Personal)
                 RefreshPersonalData();
-            if (refreshStatus.Restourant)
+            if (refreshStatus.Restaurant)
                 RefreshRestaurantData();
             if (refreshStatus.Leaderboard)
                 RefreshLeaderboardData();
+            if (refreshStatus.Missions)
+                RefreshMissionsData();
         }
 
         private static void RefreshPersonalData()
@@ -61,9 +68,15 @@ namespace PowerWaiters
             AchievementModels = AchievementsService.GetAchievements();
             UserInfo = UserInfoService.GetUserInfo();
             StatisticsModelByFilter = StatisticsService.GetStatistics();
-            PurposeModels = PurposesService.GetPurposes();
             LastUpdateDates.Personal = DateTime.Now;
             PersonalDataChanged.Invoke();
+        }
+
+        private static void RefreshMissionsData()
+        {
+            PurposeModels = PurposesService.GetPurposes();
+            LastUpdateDates.Missions = DateTime.Now;
+            MissionsDataChanged.Invoke();
         }
 
         private static void RefreshRestaurantData()

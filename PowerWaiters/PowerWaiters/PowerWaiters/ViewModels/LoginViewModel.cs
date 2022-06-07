@@ -9,15 +9,28 @@ namespace PowerWaiters.ViewModels
     {
         public ICommand LoginCommand { get; }
 
-        private string waiterCode;
-        public string WaiterCode
+        private string login;
+        public string Login
         {
-            get => waiterCode;
+            get => login;
             set
             {
-                if (value == waiterCode)
+                if (value == login)
                     return;
-                waiterCode = value;
+                login = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string password;
+        public string Password
+        {
+            get => password;
+            set
+            {
+                if (value == password)
+                    return;
+                password = value;
                 OnPropertyChanged();
             }
         }
@@ -45,13 +58,17 @@ namespace PowerWaiters.ViewModels
         {
             var loginModel = new LoginModel()
             {
-                UserName = WaiterCode,
-                Password = WaiterCode
+                Username = Login,
+                Password = Password
             };
             if (!LoginService.TryLogin(loginModel))
                 ErrorMessage = "Неверный WaiterCode";
             else
+            {
+                Client.IsBlocked = false;
                 Application.Current.MainPage.Navigation.PopAsync();
+                DataRefresher.InitialGetAllData();
+            }
         }
     }
 }

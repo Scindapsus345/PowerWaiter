@@ -7,7 +7,7 @@ namespace PowerWaiters.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string IconUrl { get; set; }
+        public string ImageUrl { get; set; }
         public int Purpose { get; set; }
         public int Progress { get; set; }
         public int Level { get; set; }
@@ -17,7 +17,7 @@ namespace PowerWaiters.Models
         {
             Name = Name,
             Description = Description,
-            IconUrl = IconUrl,
+            IconUrl = ImageUrl,
             ProgressString = $"{Progress.ToFriendlyString()}",
             LevelString = $"LEVEL {Level}",
             BackgroundImageName = GetBackgroundImageNameByLevel(),

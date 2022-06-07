@@ -9,5 +9,7 @@ namespace PowerWaiters.Models
         public DateTime Personal { get; set; }
         public DateTime Restaurant { get; set; }
         public DateTime Leaderboard { get; set; }
+        public DateTime Missions { get; set; }
+
     }
 }

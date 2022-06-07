@@ -1,4 +1,5 @@
-﻿using PowerWaiters.Models;
+﻿using System;
+using PowerWaiters.Models;
 using PowerWaiters.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,9 +63,37 @@ namespace PowerWaiters.ViewModels
             }
         }
 
+        private string timerString;
+        public string TimerString
+        {
+            get => timerString;
+            set
+            {
+                if (value == timerString)
+                    return;
+                timerString = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime endOfDay;
+
+
         public PurposesViewModel()
         {
-            DataRefresher.PersonalDataChanged += () => PurposeModels = DataRefresher.PurposeModels;
+            DataRefresher.MissionsDataChanged += () => PurposeModels = DataRefresher.PurposeModels;
+            endOfDay = DateTime.Today.AddDays(1);
+            StartTimer();
+        }
+
+        private void StartTimer()
+        {
+            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+            {
+                var time = endOfDay - DateTime.Now;
+                TimerString = $"{time.Hours:00}:{time.Minutes:00}:{time.Seconds:00}";
+                return true;
+            });
         }
 
         private void UpdatePurposesHeight() => PurposesHeight = PurposeModels.Count() * PurposeBlockHeight;

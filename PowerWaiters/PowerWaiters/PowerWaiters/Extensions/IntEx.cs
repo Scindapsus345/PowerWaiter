@@ -2,7 +2,7 @@
 
 namespace PowerWaiters.Extensions
 {
-    static class IntEx
+    public static class IntEx
     {
         public static string ToCurrencyString(this int number)
         {

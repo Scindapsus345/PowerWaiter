@@ -15,6 +15,7 @@ namespace PowerWaiters.Views
         public MainTabbedPage()
         {
             InitializeComponent();
+            CurrentPage = Children[1];
         }
     }
 }

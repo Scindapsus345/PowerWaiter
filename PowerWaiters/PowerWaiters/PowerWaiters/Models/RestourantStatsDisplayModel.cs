@@ -1,11 +1,9 @@
 ﻿namespace PowerWaiters.Models
 {
-    class RestourantStatsDisplayModel
+    public class RestourantStatsDisplayModel
     {
         public string Name { get; set; }
-        public string PurposeString { get; set; }
-        public string ProgressString { get; set; }
-        public string Deadline { get; set; }
-        public string Percentages { get; set; }
+        public string AmountString { get; set; }
+        public string IconName { get; set; }
     }
 }

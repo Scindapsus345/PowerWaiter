@@ -2,7 +2,7 @@
 {
     class AuthModel
     {
-        public string AccessToken { get; set; }
-        public int UserId { get; set; }
+        public string Token { get; set; }
+        public int IdWaiter { get; set; }
     }
 }

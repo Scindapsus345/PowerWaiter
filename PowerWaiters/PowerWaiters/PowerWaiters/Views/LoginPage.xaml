@@ -4,17 +4,21 @@
              x:Class="PowerWaiters.Views.LoginPage"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:viewModels="clr-namespace:PowerWaiters.ViewModels;assembly=PowerWaiters"
+             NavigationPage.HasNavigationBar="false"
              Background="#FFFFFF">
     <ContentPage.BindingContext>
         <viewModels:LoginViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="20" Spacing="0">
-            <Label Text="Добро пожаловать!" TextColor="Black" FontSize="26" Margin="0, 100, 0, 0"
-                   HorizontalOptions="CenterAndExpand"/>
+            <Label Text="Добро пожаловать!" TextColor="Black" FontSize="26" Margin="0, 60, 0, 0"
+                   HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
             <Image Source="logo.jpg" Margin="40, 20"/>
-            <Label Text="WaiterCode" FontSize="20" Margin="0,20,0,0"/>
-            <Entry FontSize="30" Text="{Binding WaiterCode, Mode=OneWayToSource}" Margin="0" TextTransform="Uppercase"/>
+            <Label Text="Логин" FontSize="16" Margin="0,15,0,0"/>
+            <Entry FontSize="24" Text="{Binding Login, Mode=OneWayToSource}" Margin="0"/>
+            <Label Text="Пароль" FontSize="16" Margin="0,5,0,0"/>
+            <Entry FontSize="24" Text="{Binding Password, Mode=OneWayToSource}" Margin="0" IsPassword="True"/>
+            <Label Text="{Binding ErrorMessage}" FontSize="16" Margin="0" TextColor="#BB0000"/>
             <Grid Padding="0" VerticalOptions="EndAndExpand" Margin="20">
                 <yummy:PancakeView BackgroundGradientStartPoint="0,0"
                                    BackgroundGradientEndPoint="0,1"
@@ -27,7 +31,7 @@
                         </yummy:GradientStopCollection>
                     </yummy:PancakeView.BackgroundGradientStops>
                     <Button Text="Войти" FontSize="24" FontAttributes="Bold" VerticalOptions="FillAndExpand" Padding="10"
-                            TextColor="White" Command="{Binding LoginCommand}" BackgroundColor="Transparent"/>
+                            TextColor="White" Command="{Binding LoginCommand}" BackgroundColor="#6000FF"/>
                 </yummy:PancakeView>
             </Grid>
         </StackLayout>

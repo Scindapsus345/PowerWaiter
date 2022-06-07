@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:PowerWaiters.ViewModels;assembly=PowerWaiters"
+             xmlns:elements="clr-namespace:PowerWaiters.Elements;assembly=PowerWaiters"
+             xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
+             x:Class="PowerWaiters.Views.AchievementsPage"
+             NavigationPage.HasNavigationBar="False"
+             Title="Достижения">
+    <ContentPage.BindingContext>
+        <viewModels:AchievementsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <CollectionView ItemsSource="{Binding AchievementDisplayModels}" HeightRequest="{Binding AchievementsHeight}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Spacing="0">
+                        <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ProfileViewModel}}, Path=AchievementBlockHeight}">
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Padding="0" VerticalOptions="Center" WidthRequest="100" HeightRequest="100">
+                                    <Image Source="achievement_back" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                                    <Image Source="{Binding IconUrl}" HeightRequest="50" WidthRequest="50" Margin="15" VerticalOptions="Start"/>
+                                    <Label Text="{Binding LevelString}" VerticalOptions="End" HorizontalOptions="Center" Margin="10" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+                                </Grid>
+                                <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Padding="5" Spacing="0">
+                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="20"/>
+                                    <Label Text="{Binding Description}" Margin="0, 5"/>
+                                    <StackLayout Padding="0" Spacing="0" Margin="0" Orientation="Horizontal" HorizontalOptions="Center">
+                                        <elements:GradientLabel Text="{Binding ProgressString}" 
+                                                                         FontAttributes="Bold" 
+                                                                         TextColor1="#806000FF" 
+                                                                         TextColor2="#6000FF" 
+                                                                         TextColor="Black" 
+                                                                         FontSize="20"/>
+                                        <Label Text="{Binding OfPurposeString}" TextColor="#756000FF" FontSize="16" VerticalOptions="End"/>
+                                    </StackLayout>
+                                    <progressBar:SfLinearProgressBar Progress="{Binding ProgressPercentages}" TrackColor="#60FF788E" TrackHeight="10" CornerRadius="10">
+                                        <progressBar:SfLinearProgressBar.RangeColors>
+                                            <progressBar:RangeColorCollection>
+                                                <progressBar:RangeColor IsGradient="True" Color="#FF788E" Start="0" End="50"/>
+                                                <progressBar:RangeColor IsGradient="True" Color="#D25A6B" Start="50" End="100"/>
+                                            </progressBar:RangeColorCollection>
+                                        </progressBar:SfLinearProgressBar.RangeColors>
+                                    </progressBar:SfLinearProgressBar>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                        <Frame BackgroundColor="#0C6000FF" HeightRequest="2" Padding="0" Margin="20, 0"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

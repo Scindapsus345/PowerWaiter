@@ -8,11 +8,13 @@ namespace PowerWaiters
     {
         public App()
         {
-            InitializeComponent();
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+                "NjUxMzY1QDMyMzAyZTMxMmUzMGtZQytCVFN6MXV5RThIMnNZY21WdWJhSlVEUjd0NmFEOWg3akgvZWpicjg9");
 
-            MainPage = new LoginPage();
-            //DataRefresher.InitialGetAllData();
-            //Task.Run(DataRefresher.StartPolling);
+            InitializeComponent(); 
+            MainPage = new NavigationPage(new MainTabbedPage());
+            DataRefresher.InitialGetAllData();
+            Task.Run(DataRefresher.StartPolling);
         }
 
         protected override void OnStart()

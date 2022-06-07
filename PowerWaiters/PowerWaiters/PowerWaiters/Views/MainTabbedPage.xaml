@@ -5,10 +5,11 @@
             xmlns:views="clr-namespace:PowerWaiters.Views"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
-            BarBackgroundColor="#AA6000FF"
-            SelectedTabColor="White"
-            UnselectedTabColor="#A0FFFFFF">
-    <views:ProfilePage IconImageSource="https://www.jing.fm/clipimg/full/419-4198835_clip-art-black-and-white-user-name-icon.png" Title="Профиль"/>
-    <views:MainPage IconImageSource="https://pic.onlinewebfonts.com/svg/img_56797.png" Title="Главная"/>
-    <views:PurposesPage IconImageSource="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Noun_108494_cc.svg/1200px-Noun_108494_cc.svg.png" Title="Цели"/>
+            BarBackgroundColor="#EFE5FF"
+            NavigationPage.HasNavigationBar="false"
+            SelectedTabColor="#DE130033"
+            UnselectedTabColor="#50130033">
+    <views:PurposesPage IconImageSource="purposes_icon" Title="Цели"/>
+    <views:MainPage IconImageSource="main_icon" Title="Ресторан"/>
+    <views:ProfilePage IconImageSource="profile_icon" Title="Профиль"/>
 </TabbedPage>

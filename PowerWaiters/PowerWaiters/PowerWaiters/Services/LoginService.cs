@@ -1,8 +1,9 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using PowerWaiters.Helpers;
 using PowerWaiters.Models;
 
 namespace PowerWaiters.Services
@@ -15,21 +16,23 @@ namespace PowerWaiters.Services
             jsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             var json = JsonConvert.SerializeObject(loginModel, jsonSettings);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = Client.HttpClient.GetAsync(RequestUrl(Client.UserId)).Result;
-            if (!response.IsSuccessStatusCode)
-                return false;
-            SaveAuthData(response);
-            return true;
+            if (Client.TryPost(RequestUrl(), data, out AuthModel authData, true))
+            {
+                SaveAuthData(authData);
+                return true;
+            }
+            return false;
         }
 
-        private static void SaveAuthData(HttpResponseMessage response)
+        private static void SaveAuthData(AuthModel authData)
         {
-            var authData = JsonDeserializeHelper.TryDeserialise<AuthModel>(response, null).Result;
-            App.Current.Properties["UserId"] = authData.UserId;
-            App.Current.Properties["AccessToken"] = authData.AccessToken;
-            Client.LoadAuthDataFromMemory();
+            //App.Current.Properties["UserId"] = authData.UserId;
+            //App.Current.Properties["AccessToken"] = authData.AccessToken;
+            Client.HttpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(authData.Token);
+            Client.UserId = authData.IdWaiter;
+            //Client.LoadAuthDataFromMemory();
         }
 
-        private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/waiters/{userId}/allMissions";
+        private static string RequestUrl() => $"{Client.BaseServerAddress}/api/auth/waiter";
     }
 }

@@ -15,7 +15,7 @@ namespace PowerWaiters.Models
             FullName = $"{FirstName} {LastName}",
             EmploymentDateString = $"Работает с {EmploymentDate}",
             TotalScoresString = TotalScores.ToXPString(),
-            FirstSymbol = FirstName[0].ToString(),
+            FirstSymbol = FirstName?[0].ToString(),
             Post = Position
         };
     }

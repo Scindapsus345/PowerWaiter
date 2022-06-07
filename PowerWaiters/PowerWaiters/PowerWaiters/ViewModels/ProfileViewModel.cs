@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PowerWaiters.Views;
 using Xamarin.Forms;
 
 namespace PowerWaiters.ViewModels
 {
     class ProfileViewModel : BindableObject
     {
-        private Dictionary<StatisticsTimeSpan, StatisticsModel> statisticsModelByFilter;
-        public Dictionary<StatisticsTimeSpan, StatisticsModel> StatisticsModelByFilter
+        private Dictionary<StatisticsType, StatisticsModel> statisticsModelByFilter;
+        public Dictionary<StatisticsType, StatisticsModel> StatisticsModelByFilter
         {
             get => statisticsModelByFilter;
             set
@@ -19,7 +20,7 @@ namespace PowerWaiters.ViewModels
                 if (value == statisticsModelByFilter)
                     return;
                 statisticsModelByFilter = value;
-                StatisticsDisplayModels = value[currentTimeSpan].ConvertToStatisticsDisplayModels();
+                StatisticsDisplayModels = value[currentType].ConvertToStatisticsDisplayModels();
                 OnPropertyChanged();
             }
         }
@@ -132,7 +133,7 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private int achievementBlockHeight = 150;
+        private int achievementBlockHeight = 145;
         public int AchievementBlockHeight
         {
             get => achievementBlockHeight;
@@ -146,21 +147,24 @@ namespace PowerWaiters.ViewModels
         }
 
         public ICommand UpdateStatistics { get; }
-        public string DayBtnColor => currentTimeSpan == StatisticsTimeSpan.Day ? "#E7D8FF" : "Transparent";
-        public string WeekBtnColor => currentTimeSpan == StatisticsTimeSpan.Week ? "#E7D8FF" : "Transparent";
-        public string MonthBtnColor => currentTimeSpan == StatisticsTimeSpan.Month ? "#E7D8FF" : "Transparent";
-        private StatisticsTimeSpan currentTimeSpan;
+        public ICommand OpenAchievements { get; }
+
+        public string DayBtnColor => currentType == StatisticsType.Xp ? "#E7D8FF" : "Transparent";
+        public string WeekBtnColor => currentType == StatisticsType.AverageCheque ? "#E7D8FF" : "Transparent";
+        public string MonthBtnColor => currentType == StatisticsType.Golist ? "#E7D8FF" : "Transparent";
+        private StatisticsType currentType;
 
         public ProfileViewModel()
         {
             DataRefresher.PersonalDataChanged += OnPersonalDataChanged;
-            UpdateStatistics = new Command<StatisticsTimeSpan>(OnUpdateStatistics);
+            UpdateStatistics = new Command<StatisticsType>(OnUpdateStatistics);
+            OpenAchievements = new Command(() => App.Current.MainPage.Navigation.PushAsync(new AchievementsPage()));
         }
 
-        private void OnUpdateStatistics(StatisticsTimeSpan timeSpan)
+        private void OnUpdateStatistics(StatisticsType type)
         {
-            currentTimeSpan = timeSpan;
-            StatisticsDisplayModels = StatisticsModelByFilter[timeSpan].ConvertToStatisticsDisplayModels();
+            currentType = type;
+            StatisticsDisplayModels = StatisticsModelByFilter[type].ConvertToStatisticsDisplayModels();
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));
             OnPropertyChanged(nameof(MonthBtnColor));

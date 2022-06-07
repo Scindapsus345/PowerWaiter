@@ -17,10 +17,9 @@ namespace PowerWaiters.Services
             jsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             var json = JsonConvert.SerializeObject(lastUpdateDates, jsonSettings);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = Client.HttpClient.PostAsync(RequestUrl(Client.UserId), data).Result;
-            if (!response.IsSuccessStatusCode)
-                    return null;
-            return JsonDeserializeHelper.TryDeserialise(response, new RefreshStatus()).Result;
+            if (Client.TryPost(RequestUrl(Client.UserId), data, out RefreshStatus refreshStatus))
+                return refreshStatus;
+            return null;
         }
 
         private static string RequestUrl(int userId) => $"{Client.BaseServerAddress}/polling/{userId}";

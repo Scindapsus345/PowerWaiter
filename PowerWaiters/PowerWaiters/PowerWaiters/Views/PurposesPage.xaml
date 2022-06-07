@@ -11,14 +11,25 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="0, 20" >
-                <Label Text="Мои цели" Margin="20, 0" FontSize="30" TextColor="Black" FontAttributes="Bold"/>
+                <StackLayout Margin="16, 10, 15, 15" Padding="0" Spacing="0" Orientation="Horizontal">
+                    <elements:GradientLabel TextColor1="#666000FF"
+                                            TextColor2="#6000FF"
+                                            TextColor="#AAAAAA" 
+                                            FontAttributes="Bold"
+                                            Text="{Binding TimerString}" 
+                                            FontSize="28"
+                                            VerticalOptions="End"
+                                            Margin="0,0,7,0"/>
+                    <Label VerticalOptions="End" Text="до конца дня" FontSize="18" TextColor="#61130033" Margin="0,0,0,3"/>
+                </StackLayout>
+                <Label Text="Мои цели" Margin="20, 0" FontSize="24" TextColor="#8A130033" FontAttributes="Bold"/>
                 <CollectionView ItemsSource="{Binding PurposeDisplayModels}" HeightRequest="{Binding PurposesHeight}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PurposesViewModel}}, Path=PurposeBlockHeight}">
-                                <yummy:PancakeView Padding="15" Margin="15,0,15,15" CornerRadius="15" BackgroundColor="White">
+                                <yummy:PancakeView Padding="15" Margin="15,1,15,15" CornerRadius="15" BackgroundColor="White">
                                     <yummy:PancakeView.Shadow>
-                                        <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
+                                        <yummy:DropShadow Color="#6000FE" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
                                     </yummy:PancakeView.Shadow>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -26,7 +37,7 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackLayout Spacing="10" VerticalOptions="Center">
-                                            <Label Text="{Binding Name}" FontSize="18" TextColor="Black" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Name}" FontSize="18" TextColor="#DE130033" FontAttributes="Bold"/>
                                             <StackLayout Padding="0" Spacing="0" Margin="0" Orientation="Horizontal">
                                                 <elements:GradientLabel Text="{Binding ProgressString}" 
                                                                         FontAttributes="Bold" 

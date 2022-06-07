@@ -12,12 +12,10 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10, 20" >
-                <Label Text="Мой профиль" FontSize="30" TextColor="Black" Margin="0" FontAttributes="Bold"/>
-                <Grid Padding="0" Margin="0, 20, 0, 10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+            <StackLayout Padding="10, 20, 10, 10" >
+                <Label Text="Мой профиль" FontSize="24" TextColor="Black" Margin="20,0,20,12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Frame BackgroundColor="#130033DE" HeightRequest="2" Padding="0" Margin="0, 0, 0, 10"/>
+                <Grid Padding="0" Margin="0, 0, 0, 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="110" />
@@ -26,8 +24,8 @@
                         <Label Text="{Binding UserDisplayModel.FullName}" FontSize="24" TextColor="Black" Margin="0,0,0,10"/>
                         <Label Text="{Binding UserDisplayModel.Post}" FontSize="16" TextColor="#A0000000"/>
                         <Label Text="{Binding UserDisplayModel.EmploymentDateString}" FontSize="16" TextColor="#A0000000"/>
-                        <StackLayout Padding="0" Spacing="5" Margin="0" Orientation="Horizontal">
-                            <Label Text="Общий рейтинг:" FontSize="17" TextColor="Black"/>
+                        <StackLayout Padding="0" Spacing="5" Margin="0, 10, 0, 0" Orientation="Horizontal">
+                            <Label Text="Опыт:" FontSize="17" TextColor="Black"/>
                             <elems:GradientLabel TextColor1="#666000FF"
                                                  TextColor2="#6000FF"
                                                  TextColor="Black" 
@@ -57,17 +55,10 @@
                         </yummy:PancakeView>
                     </Grid>
                 </Grid>
-
-                <StackLayout Margin="0, 15">
-                    <Label Text="Статистика" FontSize="24" TextColor="Black" FontAttributes="Bold"/>
-                    <StackLayout Orientation="Horizontal" HeightRequest="40">
-                        <Button Text="День" TextTransform="None" FontSize="16" TextColor="Black" Padding="5" BackgroundColor="{Binding DayBtnColor}" CornerRadius="5" HeightRequest="50"
-                                Command="{Binding UpdateStatistics}" CommandParameter="{x:Static models:StatisticsTimeSpan.Day}"/>
-                        <Button Text="Неделя" TextTransform="None" FontSize="16" TextColor="Black" Padding="5" BackgroundColor="{Binding WeekBtnColor}" CornerRadius="5" HeightRequest="50"
-                                Command="{Binding UpdateStatistics}" CommandParameter="{x:Static models:StatisticsTimeSpan.Week}"/>
-                        <Button Text="Месяц" TextTransform="None" FontSize="16" TextColor="Black" Padding="5" BackgroundColor="{Binding MonthBtnColor}" CornerRadius="5" HeightRequest="50"
-                                Command="{Binding UpdateStatistics}" CommandParameter="{x:Static models:StatisticsTimeSpan.Month}"/>
-                    </StackLayout>
+                
+                <StackLayout Margin="0, 15" Padding="0">
+                    <Frame BackgroundColor="#130033DE" HeightRequest="2" Padding="0" Margin="0, 0, 0, 15"/>
+                    <Label Text="Статистика" FontSize="20" TextColor="#8A130033" FontAttributes="Bold" Margin="10, 0"/>
                     <CollectionView ItemsSource="{Binding StatisticsDisplayModels}" 
                                     ItemsLayout="VerticalGrid, 2" 
                                     HeightRequest="{Binding StatisticsHeight}">
@@ -79,28 +70,28 @@
                                             <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="3"/>
                                         </yummy:PancakeView.Shadow>
                                         <StackLayout Padding="10, 10" Orientation="Horizontal">
-                                            <yummy:PancakeView CornerRadius="25" VerticalOptions="Center" Padding="2">
-                                                <Image Source="{Binding IconName}" HeightRequest="60" WidthRequest="60"/>
+                                            <yummy:PancakeView CornerRadius="25" VerticalOptions="Start" Padding="2">
+                                                <Image Source="{Binding IconName}" HeightRequest="50" WidthRequest="50"/>
                                                 <yummy:PancakeView.Shadow>
                                                     <yummy:DropShadow BlurRadius="15" Color="Black" Opacity="1"/>
                                                 </yummy:PancakeView.Shadow>
                                             </yummy:PancakeView>
-                                            <StackLayout Margin="0" Spacing="0" VerticalOptions="Center">
+                                            <StackLayout Margin="0" Spacing="5" VerticalOptions="Start">
+                                                <elems:GradientLabel Text="{Binding Count}" 
+                                                       FontSize="20" 
+                                                       TextColor1="#DE130033"
+                                                       TextColor2="#DE130033"
+                                                       TextColor="#DE130033"
+                                                       FontAttributes="Bold"
+                                                       VerticalOptions="Center" 
+                                                       HorizontalOptions="Start">
+                                                </elems:GradientLabel>
                                                 <Label Text="{Binding Name}" 
-                                                       FontSize="12" 
+                                                       FontSize="14" 
                                                        TextColor="Black" 
                                                        HorizontalOptions="Start"
                                                        LineBreakMode="CharacterWrap"
                                                        Margin="0"/>
-                                                <elems:GradientLabel Text="{Binding Count}" 
-                                                       FontSize="20" 
-                                                       TextColor1="#806000FF"
-                                                       TextColor2="#6000FF"
-                                                       FontAttributes="Bold"
-                                                       TextColor="Black"
-                                                       VerticalOptions="Center" 
-                                                       HorizontalOptions="Start">
-                                                </elems:GradientLabel>
                                             </StackLayout>
                                         </StackLayout>
                                     </yummy:PancakeView>
@@ -109,8 +100,10 @@
                         </CollectionView.ItemTemplate>  
                     </CollectionView>
                 </StackLayout>
-
-                <Label Text="Достижения" FontSize="24" TextColor="Black" FontAttributes="Bold" Margin="0"/>
+                <Grid>
+                    <Label Text="Достижения" FontSize="20" TextColor="#8A130033" FontAttributes="Bold" Margin="10, 0"/>
+                    <Button BackgroundColor="Transparent" Command="{Binding OpenAchievements}"/>
+                </Grid>
                 <yummy:PancakeView Padding="0" Margin="5" CornerRadius="15" BackgroundColor="White">
                     <yummy:PancakeView.Shadow>
                         <yummy:DropShadow Color="#6000FF" Offset="20,20" Opacity="0.8" BlurRadius="10"/>
@@ -126,8 +119,8 @@
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <Grid Padding="0" VerticalOptions="Center" WidthRequest="100" HeightRequest="100">
-                                                <Image Source="{Binding BackgroundImageName}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
-                                                <Image Source="{Binding IconUrl}" HeightRequest="50" WidthRequest="50" Margin="10" VerticalOptions="Start"/>
+                                                <Image Source="achievement_back" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                                                <Image Source="{Binding IconUrl}" HeightRequest="50" WidthRequest="50" Margin="15" VerticalOptions="Start"/>
                                                 <Label Text="{Binding LevelString}" VerticalOptions="End" HorizontalOptions="Center" Margin="10" TextColor="White" FontSize="16" FontAttributes="Bold"/>
                                             </Grid>
                                             <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Padding="5" Spacing="0">

@@ -4,6 +4,7 @@ using PowerWaiters.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using PowerWaiters.Views;
 using Xamarin.Forms;
 
 namespace PowerWaiters.ViewModels
@@ -37,8 +38,8 @@ namespace PowerWaiters.ViewModels
             }
         }
 
-        private Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>> waiterInfosByFilter;
-        public Dictionary<StatisticsTimeSpan, IEnumerable<WaiterInfo>> WaiterInfosByFilter
+        private Dictionary<StatisticsType, IEnumerable<WaiterInfo>> waiterInfosByFilter;
+        public Dictionary<StatisticsType, IEnumerable<WaiterInfo>> WaiterInfosByFilter
         {
             get => waiterInfosByFilter;
             set
@@ -46,7 +47,7 @@ namespace PowerWaiters.ViewModels
                 if (value == waiterInfosByFilter)
                     return;
                 waiterInfosByFilter = value;
-                LeaderboardItems = ConvertToLeaderboardItems(value[currentTimeSpan]);
+                LeaderboardItems = ConvertToLeaderboardItems(value[currentType]);
                 OnPropertyChanged();
             }
         }
@@ -118,16 +119,16 @@ namespace PowerWaiters.ViewModels
         }
         public ICommand UpdateLeaderboard { get; }
 
-        private StatisticsTimeSpan currentTimeSpan = StatisticsTimeSpan.Day;
-        public string DayBtnColor => currentTimeSpan == StatisticsTimeSpan.Day ? "#E7D8FF" : "Transparent";
-        public string WeekBtnColor => currentTimeSpan == StatisticsTimeSpan.Week ? "#E7D8FF" : "Transparent";
-        public string MonthBtnColor => currentTimeSpan == StatisticsTimeSpan.Month ? "#E7D8FF" : "Transparent";
+        private StatisticsType currentType = StatisticsType.Xp;
+        public string DayBtnColor => currentType == StatisticsType.Xp ? "#E7D8FF" : "Transparent";
+        public string WeekBtnColor => currentType == StatisticsType.AverageCheque ? "#E7D8FF" : "Transparent";
+        public string MonthBtnColor => currentType == StatisticsType.Golist ? "#E7D8FF" : "Transparent";
 
         public MainViewModel()
         {
             DataRefresher.LeaderboardDataChanged += OnLeaderboardDataChanged;
             DataRefresher.RestourantDataChanged += OnRestaurantDataChanged;
-            UpdateLeaderboard = new Command<StatisticsTimeSpan>(OnUpdateLeaderboard);
+            UpdateLeaderboard = new Command<StatisticsType>(OnUpdateLeaderboard);
         }
 
         private void OnRestaurantDataChanged()
@@ -142,10 +143,10 @@ namespace PowerWaiters.ViewModels
             OnPropertyChanged(nameof(WaiterInfosByFilter));
         }
 
-        private void OnUpdateLeaderboard(StatisticsTimeSpan timeSpan)
+        private void OnUpdateLeaderboard(StatisticsType type)
         {
-            LeaderboardItems = ConvertToLeaderboardItems(WaiterInfosByFilter[timeSpan]);
-            currentTimeSpan = timeSpan;
+            currentType = type;
+            LeaderboardItems = ConvertToLeaderboardItems(WaiterInfosByFilter[type]);
             OnPropertyChanged(nameof(DayBtnColor));
             OnPropertyChanged(nameof(WeekBtnColor));
             OnPropertyChanged(nameof(MonthBtnColor));
@@ -162,7 +163,9 @@ namespace PowerWaiters.ViewModels
                     IsCurrentUser = waiter.CurrentUser,
                     Name = waiter.FullName,
                     Number = i.ToString(),
-                    ScoresString = waiter.Scores.ToXPString(),
+                    ScoresString = currentType == StatisticsType.Xp ? waiter.Scores.ToXPString()
+                    : currentType == StatisticsType.AverageCheque ? waiter.Scores.ToCurrencyString():
+                    waiter.Scores.ToFriendlyString(),
                     BackgroundColor = waiter.CurrentUser ? "#0C6000FF" : "Transparent",
                     CupName = GetCupNameNumber(i)
                 };
@@ -186,6 +189,10 @@ namespace PowerWaiters.ViewModels
         }
 
         private void UpdateLeaderboardHeight() => LeaderboardHeight = LeaderboardItems.Count() * LeaderboardItemHeight;
-        private void UpdateRestourantStatsHeight() => RestourantStatsHeight = RestourantStats.Count() * restourantStatsBlockHeight;
-    }
+        private void UpdateRestourantStatsHeight()
+        {
+            var count = RestourantStats.Count();
+            RestourantStatsHeight = ((count / 2) + (count % 2)) * RestourantStatsBlockHeight;
+        }
+}
 }

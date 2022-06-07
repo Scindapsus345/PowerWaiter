@@ -6,17 +6,10 @@ namespace PowerWaiters.Helpers
 {
     public static class JsonDeserializeHelper
     {
-        public static async Task<T> TryDeserialise<T>(HttpResponseMessage response, T formatErrorData)
+        public static async Task<T> TryDeserialise<T>(HttpResponseMessage response)
         {
             var responseString = await response.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(responseString);
-            }
-            catch
-            {
-                return formatErrorData;
-            }
+            return JsonConvert.DeserializeObject<T>(responseString);
         }
     }
 }
